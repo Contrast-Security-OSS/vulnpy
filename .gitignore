@@ -1,0 +1,16 @@
+# testing
+.tox
+.pytest_cache
+.coverage
+
+# python
+*.pyc
+__pycache__
+
+# build
+build
+dist
+*.egg-info
+
+# other
+.DS_Store
