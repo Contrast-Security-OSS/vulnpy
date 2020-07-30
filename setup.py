@@ -12,7 +12,10 @@ django_extras = ["Django"]
 falcon_extras = ["falcon"]
 flask_extras = ["Flask"]
 pyramid_extras = ["pyramid"]
-all_extras = django_extras + falcon_extras + flask_extras + pyramid_extras
+testing_extras = ["WebTest"]
+all_extras = (
+    django_extras + falcon_extras + flask_extras + pyramid_extras + testing_extras
+)
 
 setup(
     name="vulnpy",
