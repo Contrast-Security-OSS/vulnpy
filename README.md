@@ -19,8 +19,8 @@ Install vulnpy with flask extensions:
 pip install 'git+git://github.com/Contrast-Security-OSS/vulnpy#egg=vulnpy[flask]'
 ```
 
-When setting up your application, register the vulnerable blueprint to your `Flask`
-application object:
+When setting up your application, register the vulnerable blueprint to your `Flask` application
+object:
 
 ```py
 from vulnpy.flask import vulnerable_blueprint
@@ -42,4 +42,22 @@ During application configuration, include vulnpy's vulnerable routes:
 ```py
 config = Configurator()
 config.include("vulnpy.pyramid.vulnerable_routes", route_prefix="/vulnpy")
+```
+
+### Falcon
+
+Install vulnpy with falcon extensions:
+
+```
+pip install 'git+git://github.com/Contrast-Security-OSS/vulnpy#egg=vulnpy[falcon]'
+```
+
+Use the `add_vulnerable_routes` function to register vulnpy's routes with your `Falcon.API`
+application object:
+
+```py
+import vulnpy.falcon
+
+app = Falcon.API()
+vulnpy.falcon.add_vulnerable_routes(app)
 ```

@@ -15,11 +15,7 @@ def _cmdi_os_system(request):
 
 def _cmdi_subprocess_popen(request):
     user_input = _get_user_input(request)
-    split_user_input = user_input.split()
-    try:
-        output = cmdi.do_subprocess_popen(split_user_input)
-    except Exception as e:
-        return Response(str(e), 400)
+    output = cmdi.do_subprocess_popen(user_input)
     return Response(output)
 
 

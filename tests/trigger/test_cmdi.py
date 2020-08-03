@@ -17,12 +17,12 @@ def test_do_os_system_exception():
 
 
 def test_do_subprocess_popen():
-    assert cmdi.do_subprocess_popen(["echo", "hacked"]) == b"hacked\n"
+    assert cmdi.do_subprocess_popen("echo hacked") == b"hacked\n"
 
 
 def test_do_subprocess_popen_bad_command():
-    with pytest.raises(OSError):
-        cmdi.do_subprocess_popen(["foooooooo", "this", "is", "not", "a", "command"])
+    """This makes some assumptions about the host system, but it seems to be generic enough"""
+    assert b"not found" in cmdi.do_subprocess_popen("foooooooo this is not a command")
 
 
 def test_do_subprocess_popen_exception():

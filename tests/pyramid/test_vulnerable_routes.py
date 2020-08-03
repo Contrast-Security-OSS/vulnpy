@@ -44,8 +44,8 @@ def test_cmdi_subprocess_popen_normal(client, method_name):
 
 
 def test_cmdi_subprocess_popen_bad_command(client):
-    client.get("/vulnpy/cmdi/subprocess-popen", {"user_input": "foo"}, status=400)
+    client.get("/vulnpy/cmdi/subprocess-popen", {"user_input": "foo"}, status=200)
 
 
 def test_cmdi_subprocess_popen_invalid_input(client):
-    client.get("/vulnpy/cmdi/subprocess-popen", {"ignored_param": "bad"}, status=400)
+    client.get("/vulnpy/cmdi/subprocess-popen", {"ignored_param": "bad"}, status=200)

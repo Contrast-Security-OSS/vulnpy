@@ -36,7 +36,7 @@ def test_cmdi_os_system_bad_command(client):
 
 def test_cmdi_os_system_invalid_input(client):
     response = client.get("/vulnpy/cmdi/os-system/?ignored_param=bad")
-    assert response.status_code == 400
+    assert response.status_code == 200
 
 
 def test_cmdi_subprocess_popen_get(client):
@@ -53,9 +53,9 @@ def test_cmdi_subprocess_popen_post(client):
 
 def test_cmdi_subprocess_popen_bad_command(client):
     response = client.get("/vulnpy/cmdi/subprocess-popen/?user_input=foo")
-    assert response.status_code == 400
+    assert response.status_code == 200
 
 
 def test_cmdi_subprocess_popen_invalid_input(client):
     response = client.get("/vulnpy/cmdi/os-system/?ignored_param=bad")
-    assert response.status_code == 400
+    assert response.status_code == 200
