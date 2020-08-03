@@ -12,7 +12,7 @@ django_extras = ["Django"]
 falcon_extras = ["falcon"]
 flask_extras = ["Flask"]
 pyramid_extras = ["pyramid"]
-testing_extras = ["WebTest"]
+testing_extras = ["mock==3.*", "WebTest"]
 all_extras = (
     django_extras + falcon_extras + flask_extras + pyramid_extras + testing_extras
 )
