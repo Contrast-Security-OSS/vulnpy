@@ -29,6 +29,29 @@ app = Flask(__name__)
 app.register_blueprint(vulnerable_blueprint)
 ```
 
+### Django
+
+Install vulnpy with django extensions:
+
+```
+pip install 'git+git://github.com/Contrast-Security-OSS/vulnpy#egg=vulnpy[django]'
+```
+
+Add vulnpy's routes to your `urlpatterns` sequence (in the module specified by the ROOT_URLCONF
+setting). For example:
+
+```py
+from vulnpy.django import vulnerable_urlpatterns
+
+urlpatterns = [
+	path('example/', views.example),
+    # ... etc
+] + vulnerable_urlpatterns
+```
+
+`vulnpy.django.vulnerable_urlpatterns` is a list of paths.
+
+
 ### Pyramid
 
 Install vulnpy with pyramid extensions:
