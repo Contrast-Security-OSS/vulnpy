@@ -8,11 +8,11 @@ import vulnpy
 import vulnpy.falcon
 
 
-@pytest.fixture
+@pytest.fixture(scope="module")
 def client():
     app = falcon.API()
     vulnpy.falcon.add_vulnerable_routes(app)
-    yield testing.TestClient(app)
+    return testing.TestClient(app)
 
 
 def test_home(client):

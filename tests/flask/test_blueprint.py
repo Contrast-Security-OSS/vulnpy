@@ -4,7 +4,7 @@ from flask import Flask
 from vulnpy.flask.blueprint import vulnerable_blueprint
 
 
-@pytest.fixture
+@pytest.fixture(scope="module")
 def client():
     app = Flask(__name__)
     app.register_blueprint(vulnerable_blueprint)
