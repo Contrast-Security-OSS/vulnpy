@@ -1,0 +1,4 @@
+[paths]
+source =
+    src/vulnpy/
+    */site-packages/vulnpy

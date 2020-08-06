@@ -1,7 +1,7 @@
 # testing
 .tox
 .pytest_cache
-.coverage
+.coverage.*
 
 # python
 *.pyc
