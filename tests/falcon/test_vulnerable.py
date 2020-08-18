@@ -20,25 +20,29 @@ def test_home(client):
     assert response.status_code == 200
 
 
+def test_cmdi_basic(client):
+    response = client.simulate_get("/vulnpy/cmdi")
+    assert response.status_code == 200
+
+
 def test_cmdi_os_system_normal(client):
     response = client.simulate_get(
         "/vulnpy/cmdi/os-system", params={"user_input": "echo attack"}
     )
-    assert int(response.content) == 0
+    assert response.status_code == 200
 
 
 def test_cmdi_os_system_bad_command(client):
     response = client.simulate_get(
         "/vulnpy/cmdi/os-system", params={"user_input": "foo"}
     )
-    assert int(response.content) != 0
+    assert response.status_code == 200
 
 
 def test_cmdi_os_system_invalid_input(client):
     response = client.simulate_get(
         "/vulnpy/cmdi/os-system", params={"ignored_param": "bad"}
     )
-    assert int(response.content) == 0
     assert response.status_code == 200
 
 
@@ -46,7 +50,7 @@ def test_cmdi_subprocess_popen_normal(client):
     response = client.simulate_get(
         "/vulnpy/cmdi/subprocess-popen", params={"user_input": "echo attack"}
     )
-    assert response.content == b"attack\n"
+    assert response.status_code == 200
 
 
 def test_cmdi_subprocess_popen_bad_command(client):
@@ -72,10 +76,4 @@ def test_handle_exception(mocked_trigger, client):
         params={"user_input": "something", "catch_exception": True},
     )
     assert mocked_trigger.called
-    assert response.content == b"something bad happened"
-
-
-def test_cmdi_base_class():
-    handler = vulnpy.falcon.vulnerable.Cmdi()
-    with pytest.raises(NotImplementedError):
-        handler.trigger()
+    assert response.status_code == 200

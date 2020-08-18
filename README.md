@@ -64,7 +64,7 @@ During application configuration, include vulnpy's vulnerable routes:
 
 ```py
 config = Configurator()
-config.include("vulnpy.pyramid.vulnerable_routes", route_prefix="/vulnpy")
+config.include("vulnpy.pyramid.vulnerable_routes")
 ```
 
 ### Falcon
@@ -84,3 +84,20 @@ import vulnpy.falcon
 app = Falcon.API()
 vulnpy.falcon.add_vulnerable_routes(app)
 ```
+
+## Sample Servers
+
+`vulnpy` is intended to extend the functionality of an existing web application. However, for
+convenience, we provide tiny webapps for each supported framework with `vulnpy` attached.
+
+To serve a webapp on your local machine,
+- check out the source repo and `cd` into it
+- ensure that vulnpy is installed in your current virtual environment with the appropriate extensions (see above)
+- run:
+
+```sh
+make (your_framework)
+```
+
+For example, `pip install -e ".[flask]" && make flask` launches a simple flask webapp with vulnpy
+endpoints.
