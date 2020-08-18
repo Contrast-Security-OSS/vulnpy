@@ -1,27 +1,37 @@
-from vulnpy.trigger import cmdi
-
 from flask import Blueprint, request
 
-vulnerable_blueprint = Blueprint("vulnpy", __name__, url_prefix="/vulnpy")
+from vulnpy.common import get_template
+from vulnpy.trigger import cmdi
+
+vulnerable_blueprint = Blueprint("vulnpy", __name__, url_prefix="/vulnpy",)
 
 
-@vulnerable_blueprint.route("/", methods=["GET", "POST"])
+@vulnerable_blueprint.route("/", methods=["GET", "POST"], strict_slashes=False)
 def _home():
-    return "vulnpy root"
+    return get_template("home.html")
 
 
-@vulnerable_blueprint.route("/cmdi/os-system/", methods=["GET", "POST"])
+@vulnerable_blueprint.route("/cmdi/", methods=["GET", "POST"], strict_slashes=False)
+def _cmdi():
+    return get_template("cmdi.html")
+
+
+@vulnerable_blueprint.route(
+    "/cmdi/os-system/", methods=["GET", "POST"], strict_slashes=False
+)
 def _cmdi_os_system():
     user_input = _get_user_input()
-    status = cmdi.do_os_system(user_input)
-    return str(status)
+    cmdi.do_os_system(user_input)
+    return get_template("cmdi.html")
 
 
-@vulnerable_blueprint.route("/cmdi/subprocess-popen/", methods=["GET", "POST"])
+@vulnerable_blueprint.route(
+    "/cmdi/subprocess-popen/", methods=["GET", "POST"], strict_slashes=False
+)
 def _cmdi_subprocess_popen():
     user_input = _get_user_input()
-    output = cmdi.do_subprocess_popen(user_input)
-    return output
+    cmdi.do_subprocess_popen(user_input)
+    return get_template("cmdi.html")
 
 
 def _get_user_input():

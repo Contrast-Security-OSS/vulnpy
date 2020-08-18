@@ -1,22 +1,27 @@
 from pyramid.response import Response
 
+from vulnpy.common import get_template
 from vulnpy.trigger import cmdi
 
 
 def _home(request):
-    return Response("vulnpy root")
+    return Response(get_template("home.html"))
+
+
+def _cmdi(request):
+    return Response(get_template("cmdi.html"))
 
 
 def _cmdi_os_system(request):
     user_input = _get_user_input(request)
-    status = cmdi.do_os_system(user_input)
-    return Response(str(status))
+    cmdi.do_os_system(user_input)
+    return Response(get_template("cmdi.html"))
 
 
 def _cmdi_subprocess_popen(request):
     user_input = _get_user_input(request)
-    output = cmdi.do_subprocess_popen(user_input)
-    return Response(output)
+    cmdi.do_subprocess_popen(user_input)
+    return Response(get_template("cmdi.html"))
 
 
 def _get_user_input(request):
@@ -29,9 +34,29 @@ def includeme(config):
     """
     config.include looks for a function with this name specifically
     """
-    config.add_route("vulnpy-root", "")
-    config.add_view(_home, route_name="vulnpy-root")
-    config.add_route("cmdi-os-system", "/cmdi/os-system")
-    config.add_view(_cmdi_os_system, route_name="cmdi-os-system")
-    config.add_route("cmdi-subprocess-popen", "/cmdi/subprocess-popen")
-    config.add_view(_cmdi_subprocess_popen, route_name="cmdi-subprocess-popen")
+    _add_route(config, "vulnpy-root", "/vulnpy", _home)
+    _add_route(config, "cmdi", "/vulnpy/cmdi", _cmdi)
+    _add_route(config, "cmdi-os-system", "/vulnpy/cmdi/os-system", _cmdi_os_system)
+    _add_route(
+        config,
+        "cmdi-subprocess-popen",
+        "/vulnpy/cmdi/subprocess-popen",
+        _cmdi_subprocess_popen,
+    )
+
+
+def _add_route(config, route_name, pattern, view):
+    """
+    Adds a view to the config called route_name using the specified URL pattern.
+    Also adds an identical handler for the trailing slash case.
+    :param config: instance of pyramid.config.Configurator
+    :param route_name: name given to the route
+    :param pattern: URL pattern
+    :param view: callable that will handle the view
+    """
+    config.add_route(route_name, pattern)
+    config.add_view(view, route_name=route_name)
+
+    route_name_slash = route_name + "-with-slash"
+    config.add_route(route_name_slash, pattern + "/")
+    config.add_view(view, route_name=route_name_slash)

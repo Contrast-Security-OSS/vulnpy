@@ -12,9 +12,9 @@ django_extras = ["Django"]
 falcon_extras = ["falcon"]
 flask_extras = ["Flask"]
 pyramid_extras = ["pyramid"]
-testing_extras = ["mock==3.*", "WebTest"]
+extra_extras = ["mock==3.*", "WebTest", "gunicorn"]
 all_extras = (
-    django_extras + falcon_extras + flask_extras + pyramid_extras + testing_extras
+    django_extras + falcon_extras + flask_extras + pyramid_extras + extra_extras
 )
 
 setup(
@@ -41,6 +41,7 @@ setup(
     author_email="python@contrastsecurity.onmicrosoft.com",
     url="https://github.com/Contrast-Security-OSS/vulnpy",
     license="MIT",
+    include_package_data=True,
     packages=find_packages("src"),
     package_dir={"": "src"},
     python_requires=">=2.7,!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*",

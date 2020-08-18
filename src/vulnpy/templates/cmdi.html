@@ -1,0 +1,62 @@
+<!-- This file was automatically generated. Do not edit manually. -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.2/css/bulma.min.css">
+  </head>
+  <body>
+    <nav class="navbar" style="background: #4b8bbe">
+      <div class="navbar-brand">
+        <a class="navbar-item" href="/vulnpy/">
+          VulnPy by Contrast Security
+        </a>
+      </div>
+    </nav>
+    <div class="columns">
+      <aside class="column is-2 hero aside is-fullheight" style="background: #ffe873">
+        <div>
+          <div class="main">
+            <ul class="menu-list">
+              <li><a href="/vulnpy/cmdi/">CMD Injection</a></li>
+            </ul>
+          </div>
+        </div>
+      </aside>
+      <br>
+      <div class="column container">
+        <!-- ###vulnpy-injection-site### - do not modify this line; it's in a regex -->
+<h1>Cmd Injection: os.system</h1>
+
+<form action="/vulnpy/cmdi/os-system/" method="get">
+  <div class="field has-addons">
+    <div class="control">
+      <input class="input" type="text" name="user_input" placeholder="ls; echo hacked">
+    </div>
+    <div class="control">
+      <button class="button is-info" action="submit">
+        Execute
+      </button>
+    </div>
+  </div>
+</form>
+<br>
+
+<h1>Cmd Injection: subprocess.popen</h1>
+
+<form action="/vulnpy/cmdi/subprocess-popen/" method="get">
+  <div class="field has-addons">
+    <div class="control">
+      <input class="input" type="text" name="user_input" placeholder="ls; echo hacked">
+    </div>
+    <div class="control">
+      <button class="button is-info" action="submit">
+        Execute
+      </button>
+    </div>
+  </div>
+</form>
+        <!-- post-injection site -->
+      </div>
+    </div>
+  </body>
+</html>

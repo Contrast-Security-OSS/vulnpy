@@ -16,21 +16,25 @@ def test_vulnpy_root(client):
     assert response.status_code == 200
 
 
+def test_cmdi_basic(client):
+    response = client.get("/vulnpy/cmdi")
+    assert response.status_code == 200
+
+
 @pytest.mark.parametrize("method_name", ["get", "post"])
 def test_cmdi_os_system_normal(client, method_name):
     get_or_post = getattr(client, method_name)
     response = get_or_post("/vulnpy/cmdi/os-system", {"user_input": "echo attack"})
-    assert int(response.content) == 0
+    assert response.status_code == 200
 
 
 def test_cmdi_os_system_bad_command(client):
     response = client.get("/vulnpy/cmdi/os-system", {"user_input": "foo"})
-    assert int(response.content) != 0
+    assert response.status_code == 200
 
 
 def test_cmdi_os_system_invalid_input(client):
     response = client.get("/vulnpy/cmdi/os-system", {"ignored_param": "bad"})
-    assert int(response.content) == 0
     assert response.status_code == 200
 
 
@@ -40,7 +44,7 @@ def test_cmdi_subprocess_popen_normal(client, method_name):
     response = get_or_post(
         "/vulnpy/cmdi/subprocess-popen", {"user_input": "echo attack"}
     )
-    assert response.content == b"attack\n"
+    assert response.status_code == 200
 
 
 def test_cmdi_subprocess_popen_bad_command(client):
