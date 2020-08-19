@@ -1,1 +1,1 @@
-from .utils import get_template  # noqa: F401
+from .templating import get_template  # noqa: F401
