@@ -1,14 +1,17 @@
+HOST ?= localhost
+PORT ?= 8000
+
 templates:
 	./scripts/gen_templates.sh
 
 flask: templates
-	FLASK_APP=apps/flask_app.py flask run --port=8000
+	FLASK_APP=apps/flask_app.py flask run --host=$(HOST) --port=$(PORT)
 
 falcon: templates
-	gunicorn apps.falcon_app:app
+	gunicorn -b $(HOST):$(PORT) apps.falcon_app:app
 
 pyramid: templates
-	python apps/pyramid_app.py
+	python apps/pyramid_app.py $(HOST):$(PORT)
 
 django: templates
-	python apps/django_app.py runserver
+	python apps/django_app.py runserver $(HOST):$(PORT)
