@@ -77,3 +77,44 @@ def test_handle_exception(mocked_trigger, client):
     )
     assert mocked_trigger.called
     assert response.status_code == 200
+
+
+def test_deserialization_basic(client):
+    response = client.simulate_get("/vulnpy/deserialization")
+    assert response.status_code == 200
+
+
+def test_deserialization_pickle_load_normal(client):
+    response = client.simulate_get(
+        "/vulnpy/deserialization/pickle-load",
+        params={"user_input": "csubprocess\ncheck_output\n(S'ls'\ntR."},
+    )
+    assert response.status_code == 200
+
+
+def test_deserialization_pickle_loads_normal(client):
+    response = client.simulate_get(
+        "/vulnpy/deserialization/pickle-loads",
+        params={"user_input": "csubprocess\ncheck_output\n(S'ls'\ntR."},
+    )
+    assert response.status_code == 200
+
+
+def test_deserialization_yaml_load_normal(client):
+    response = client.simulate_get(
+        "/vulnpy/deserialization/yaml-load",
+        params={
+            "user_input": '!!python/object/apply:subprocess.Popen [["echo", "Hello World"]]'
+        },
+    )
+    assert response.status_code == 200
+
+
+def test_deserialization_yaml_load_all_normal(client):
+    response = client.simulate_get(
+        "/vulnpy/deserialization/yaml-load-all",
+        params={
+            "user_input": '!!python/object/apply:subprocess.Popen [["echo", "Hello World"]]'
+        },
+    )
+    assert response.status_code == 200
