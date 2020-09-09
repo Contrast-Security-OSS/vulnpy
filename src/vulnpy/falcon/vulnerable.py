@@ -1,5 +1,5 @@
 from vulnpy.common import get_template
-from vulnpy.trigger import cmdi
+from vulnpy.trigger import cmdi, deserialization
 
 
 def add_vulnerable_routes(app):
@@ -11,9 +11,17 @@ def add_vulnerable_routes(app):
     """
     app.req_options.strip_url_path_trailing_slash = True
     app.add_route("/vulnpy", Home())
+
     app.add_route("/vulnpy/cmdi", Cmdi())
     app.add_route("/vulnpy/cmdi/os-system", OsSystem())
     app.add_route("/vulnpy/cmdi/subprocess-popen", SubprocessPopen())
+
+    app.add_route("/vulnpy/deserialization", Deserialization())
+    app.add_route("/vulnpy/deserialization/pickle-load", PickleLoad())
+    app.add_route("/vulnpy/deserialization/pickle-loads", PickleLoads())
+
+    app.add_route("/vulnpy/deserialization/yaml-load", YamlLoad())
+    app.add_route("/vulnpy/deserialization/yaml-load-all", YamlLoadAll())
 
 
 def _set_response(resp, path):
@@ -56,3 +64,33 @@ class OsSystem(Cmdi):
 class SubprocessPopen(Cmdi):
     def trigger(self, command):
         cmdi.do_subprocess_popen(command)
+
+
+class Deserialization(object):
+    def trigger(self, command):
+        pass
+
+    def on_get(self, req, resp):
+        user_input = req.get_param("user_input") or ""
+        self.trigger(user_input)
+        _set_response(resp, "deserialization.html")
+
+
+class PickleLoad(Deserialization):
+    def trigger(self, command):
+        deserialization.do_pickle_load(command)
+
+
+class PickleLoads(Deserialization):
+    def trigger(self, command):
+        deserialization.do_pickle_loads(command)
+
+
+class YamlLoad(Deserialization):
+    def trigger(self, command):
+        deserialization.do_yaml_load(command)
+
+
+class YamlLoadAll(Deserialization):
+    def trigger(self, command):
+        deserialization.do_yaml_load_all(command)

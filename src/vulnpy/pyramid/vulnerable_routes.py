@@ -1,7 +1,7 @@
 from pyramid.response import Response
 
 from vulnpy.common import get_template
-from vulnpy.trigger import cmdi
+from vulnpy.trigger import cmdi, deserialization
 
 
 def _home(request):
@@ -24,6 +24,30 @@ def _cmdi_subprocess_popen(request):
     return Response(get_template("cmdi.html"))
 
 
+def _deserialization_pickle_load(request):
+    user_input = _get_user_input(request)
+    deserialization.do_pickle_load(user_input)
+    return Response(get_template("deserialization.html"))
+
+
+def _deserialization_pickle_loads(request):
+    user_input = _get_user_input(request)
+    deserialization.do_pickle_loads(user_input)
+    return Response(get_template("deserialization.html"))
+
+
+def _deserialization_yaml_load(request):
+    user_input = _get_user_input(request)
+    deserialization.do_yaml_load(user_input)
+    return Response(get_template("deserialization.html"))
+
+
+def _deserialization_yaml_load_all(request):
+    user_input = _get_user_input(request)
+    deserialization.do_yaml_load_all(user_input)
+    return Response(get_template("deserialization.html"))
+
+
 def _get_user_input(request):
     if request.method == "GET":
         return request.GET.get("user_input", "")
@@ -35,6 +59,7 @@ def includeme(config):
     config.include looks for a function with this name specifically
     """
     _add_route(config, "vulnpy-root", "/vulnpy", _home)
+
     _add_route(config, "cmdi", "/vulnpy/cmdi", _cmdi)
     _add_route(config, "cmdi-os-system", "/vulnpy/cmdi/os-system", _cmdi_os_system)
     _add_route(
@@ -42,6 +67,34 @@ def includeme(config):
         "cmdi-subprocess-popen",
         "/vulnpy/cmdi/subprocess-popen",
         _cmdi_subprocess_popen,
+    )
+
+    _add_route(
+        config,
+        "deserialization-pickle-load",
+        "/vulnpy/deserialization/pickle-load",
+        _deserialization_pickle_load,
+    )
+
+    _add_route(
+        config,
+        "deserialization-pickle-loads",
+        "/vulnpy/deserialization/pickle-loads",
+        _deserialization_pickle_loads,
+    )
+
+    _add_route(
+        config,
+        "deserialization-yaml-load",
+        "/vulnpy/deserialization/yaml-load",
+        _deserialization_yaml_load,
+    )
+
+    _add_route(
+        config,
+        "deserialization-yaml-load-all",
+        "/vulnpy/deserialization/yaml-load-all",
+        _deserialization_yaml_load_all,
     )
 
 
