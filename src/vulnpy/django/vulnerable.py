@@ -9,18 +9,6 @@ from vulnpy.common import get_template
 from vulnpy.trigger import cmdi, deserialization
 
 
-def _vulnpy_root(request):
-    return HttpResponse(get_template("home.html"))
-
-
-def _cmdi(request):
-    return HttpResponse(get_template("cmdi.html"))
-
-
-def _deserialization(request):
-    return HttpResponse(get_template("deserialization.html"))
-
-
 def _cmdi_os_system(request):
     user_input = _get_user_input(request)
     cmdi.do_os_system(user_input)
@@ -63,12 +51,37 @@ def _get_user_input(request):
     return request.POST.get("user_input", "")
 
 
+def gen_root_view(name="home"):
+    def _root(request):
+        return HttpResponse(get_template("{}.html".format(name)))
+
+    return _root
+
+
+def get_root_name(name):
+    if name == "home":
+        return r"^vulnpy/?$"
+    return r"^vulnpy/{}/?$".format(name)
+
+
+VIEW_NAMES = [
+    "home",
+    "cmdi",
+    "deserialization",
+]
+
+
+root_urls = []
+for name in VIEW_NAMES:
+    view_name = get_root_name(name)
+    view_func = gen_root_view(name)
+
+    root_urls.append(compat_url(view_name, view_func))
+
+
 vulnerable_urlpatterns = [
-    compat_url(r"^vulnpy/?$", _vulnpy_root),
-    compat_url(r"^vulnpy/cmdi/?$", _cmdi),
     compat_url(r"^vulnpy/cmdi/os-system/?$", _cmdi_os_system),
     compat_url(r"^vulnpy/cmdi/subprocess-popen/?$", _cmdi_subprocess_popen),
-    compat_url(r"^vulnpy/deserialization/?$", _deserialization),
     compat_url(r"^vulnpy/deserialization/pickle-load/?$", _deserialization_pickle_load),
     compat_url(
         r"^vulnpy/deserialization/pickle-loads/?$", _deserialization_pickle_loads
@@ -77,7 +90,7 @@ vulnerable_urlpatterns = [
     compat_url(
         r"^vulnpy/deserialization/yaml-load-all/?$", _deserialization_yaml_load_all
     ),
-]
+] + root_urls
 
 # This module can also be used as a standalone ROOT_URLCONF
 urlpatterns = vulnerable_urlpatterns
