@@ -1,7 +1,8 @@
+import sys
 from flask import Blueprint, request
 
 from vulnpy.common import get_template
-from vulnpy.trigger import cmdi, deserialization
+from vulnpy.trigger import TRIGGER_MAP, get_trigger, cmdi, deserialization  # noqa: F401
 
 vulnerable_blueprint = Blueprint(
     "vulnpy",
@@ -10,78 +11,62 @@ vulnerable_blueprint = Blueprint(
 )
 
 
-@vulnerable_blueprint.route("/", methods=["GET", "POST"], strict_slashes=False)
-def _home():
-    return get_template("home.html")
-
-
-@vulnerable_blueprint.route("/cmdi/", methods=["GET", "POST"], strict_slashes=False)
-def _cmdi():
-    return get_template("cmdi.html")
-
-
-@vulnerable_blueprint.route(
-    "/deserialization/", methods=["GET", "POST"], strict_slashes=False
-)
-def _deserialization():
-    return get_template("deserialization.html")
-
-
-@vulnerable_blueprint.route(
-    "/cmdi/os-system/", methods=["GET", "POST"], strict_slashes=False
-)
-def _cmdi_os_system():
-    user_input = _get_user_input()
-    cmdi.do_os_system(user_input)
-    return get_template("cmdi.html")
-
-
-@vulnerable_blueprint.route(
-    "/cmdi/subprocess-popen/", methods=["GET", "POST"], strict_slashes=False
-)
-def _cmdi_subprocess_popen():
-    user_input = _get_user_input()
-    cmdi.do_subprocess_popen(user_input)
-    return get_template("cmdi.html")
-
-
-@vulnerable_blueprint.route(
-    "/deserialization/pickle-load/", methods=["GET", "POST"], strict_slashes=False
-)
-def _deserialization_pickle_load():
-    user_input = _get_user_input()
-    deserialization.do_pickle_load(user_input)
-    return get_template("deserialization.html")
-
-
-@vulnerable_blueprint.route(
-    "/deserialization/pickle-loads/", methods=["GET", "POST"], strict_slashes=False
-)
-def _deserialization_pickle_loads():
-    user_input = _get_user_input()
-    deserialization.do_pickle_loads(user_input)
-    return get_template("deserialization.html")
-
-
-@vulnerable_blueprint.route(
-    "/deserialization/yaml-load/", methods=["GET", "POST"], strict_slashes=False
-)
-def _deserialization_yaml_load():
-    user_input = _get_user_input()
-    deserialization.do_yaml_load(user_input)
-    return get_template("deserialization.html")
-
-
-@vulnerable_blueprint.route(
-    "/deserialization/yaml-load-all/", methods=["GET", "POST"], strict_slashes=False
-)
-def _deserialization_yaml_load_all():
-    user_input = _get_user_input()
-    deserialization.do_yaml_load_all(user_input)
-    return get_template("deserialization.html")
-
-
 def _get_user_input():
     if request.method == "GET":
         return request.args.get("user_input", "")
     return request.form.get("user_input", "")
+
+
+def get_root_name(name):
+    if name == "home":
+        return "/"
+    return "/{}/".format(name)
+
+
+def get_trigger_name(name, trigger):
+    return "/{}/{}/".format(name, trigger)
+
+
+def gen_root_view(name):
+    def _view():
+        return get_template("{}.html".format(name))
+
+    view_name = get_root_name(name)
+    vulnerable_blueprint.add_url_rule(
+        view_name, view_name, _view, methods=["GET", "POST"], strict_slashes=False
+    )
+    return _view
+
+
+def generate_root_urls():
+    for name in TRIGGER_MAP:
+        gen_root_view(name)
+
+
+def get_trigger_view(name, trigger):
+    def _view():
+        user_input = _get_user_input()
+
+        module = sys.modules.get("vulnpy.trigger.{}".format(name))
+        trigger_func = get_trigger(module, trigger)
+
+        if trigger_func:
+            trigger_func(user_input)
+        return get_template("{}.html".format(name))
+
+    view_name = get_trigger_name(name, trigger)
+
+    vulnerable_blueprint.add_url_rule(
+        view_name, view_name, _view, methods=["GET", "POST"], strict_slashes=False
+    )
+    return _view
+
+
+def generate_trigger_urls():
+    for name, triggers in TRIGGER_MAP.items():
+        for trigger in triggers:
+            get_trigger_view(name, trigger)
+
+
+generate_root_urls()
+generate_trigger_urls()

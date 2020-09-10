@@ -8,7 +8,7 @@ except ImportError:
     from django.conf.urls import url as compat_url
 
 from vulnpy.common import get_template
-from vulnpy.trigger import TRIGGER_MAP, cmdi, deserialization  # noqa: F401
+from vulnpy.trigger import TRIGGER_MAP, get_trigger, cmdi, deserialization  # noqa: F401
 
 
 def _get_user_input(request):
@@ -22,22 +22,6 @@ def gen_root_view(name):
         return HttpResponse(get_template("{}.html".format(name)))
 
     return _root
-
-
-def get_trigger(module, trigger_name):
-    """
-    Find a function LIKE trigger_name in the module.
-
-    :param module: Python module
-    :param trigger_name: str
-    :return: function
-    """
-    func_name = "do_{}".format(trigger_name.replace("-", "_"))
-
-    try:
-        return getattr(module, func_name)
-    except AttributeError:
-        return
 
 
 def get_trigger_view(name, trigger):
