@@ -8,13 +8,22 @@ try:
 except IOError:
     README = ""
 
-django_extras = ["Django"]
-falcon_extras = ["falcon"]
-flask_extras = ["Flask"]
-pyramid_extras = ["pyramid"]
+trigger_extras = ["PyYAML>=5.1"]
+
+django_extras = ["Django"] + trigger_extras
+falcon_extras = ["falcon"] + trigger_extras
+flask_extras = ["Flask"] + trigger_extras
+pyramid_extras = ["pyramid"] + trigger_extras
+
 extra_extras = ["mock==3.*", "WebTest", "gunicorn"]
+
 all_extras = (
-    django_extras + falcon_extras + flask_extras + pyramid_extras + extra_extras
+    django_extras
+    + falcon_extras
+    + flask_extras
+    + pyramid_extras
+    + extra_extras
+    + trigger_extras
 )
 
 setup(
