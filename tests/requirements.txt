@@ -1,3 +1,2 @@
 pytest-cov
-PyYAML>=5.1
 tox
