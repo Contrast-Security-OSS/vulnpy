@@ -1,3 +1,5 @@
+import sys
+
 from django.http import HttpResponse
 
 try:
@@ -6,43 +8,7 @@ except ImportError:
     from django.conf.urls import url as compat_url
 
 from vulnpy.common import get_template
-from vulnpy.trigger import cmdi, deserialization
-
-
-def _cmdi_os_system(request):
-    user_input = _get_user_input(request)
-    cmdi.do_os_system(user_input)
-    return HttpResponse(get_template("cmdi.html"))
-
-
-def _cmdi_subprocess_popen(request):
-    user_input = _get_user_input(request)
-    cmdi.do_subprocess_popen(user_input)
-    return HttpResponse(get_template("cmdi.html"))
-
-
-def _deserialization_pickle_load(request):
-    user_input = _get_user_input(request)
-    deserialization.do_pickle_load(user_input)
-    return HttpResponse(get_template("deserialization.html"))
-
-
-def _deserialization_pickle_loads(request):
-    user_input = _get_user_input(request)
-    deserialization.do_pickle_loads(user_input)
-    return HttpResponse(get_template("deserialization.html"))
-
-
-def _deserialization_yaml_load(request):
-    user_input = _get_user_input(request)
-    deserialization.do_yaml_load(user_input)
-    return HttpResponse(get_template("deserialization.html"))
-
-
-def _deserialization_yaml_load_all(request):
-    user_input = _get_user_input(request)
-    deserialization.do_yaml_load_all(user_input)
-    return HttpResponse(get_template("deserialization.html"))
+from vulnpy.trigger import TRIGGER_MAP, cmdi, deserialization  # noqa: F401
 
 
 def _get_user_input(request):
@@ -51,11 +17,41 @@ def _get_user_input(request):
     return request.POST.get("user_input", "")
 
 
-def gen_root_view(name="home"):
+def gen_root_view(name):
     def _root(request):
         return HttpResponse(get_template("{}.html".format(name)))
 
     return _root
+
+
+def get_trigger(module, trigger_name):
+    """
+    Find a function LIKE trigger_name in the module.
+
+    :param module: Python module
+    :param trigger_name: str
+    :return: function
+    """
+    func_name = "do_{}".format(trigger_name.replace("-", "_"))
+
+    try:
+        return getattr(module, func_name)
+    except AttributeError:
+        return
+
+
+def get_trigger_view(name, trigger):
+    def _view(request):
+        user_input = _get_user_input(request)
+
+        module = sys.modules.get("vulnpy.trigger.{}".format(name))
+        trigger_func = get_trigger(module, trigger)
+
+        if trigger_func:
+            trigger_func(user_input)
+        return HttpResponse(get_template("{}.html".format(name)))
+
+    return _view
 
 
 def get_root_name(name):
@@ -64,33 +60,35 @@ def get_root_name(name):
     return r"^vulnpy/{}/?$".format(name)
 
 
-VIEW_NAMES = [
-    "home",
-    "cmdi",
-    "deserialization",
-]
+def get_trigger_name(name, trigger):
+    return r"^vulnpy/{}/{}/?$".format(name, trigger)
 
 
-root_urls = []
-for name in VIEW_NAMES:
-    view_name = get_root_name(name)
-    view_func = gen_root_view(name)
+def generate_root_urls():
+    root_urls = []
+    for name in TRIGGER_MAP:
+        view_name = get_root_name(name)
+        view_func = gen_root_view(name)
 
-    root_urls.append(compat_url(view_name, view_func))
+        root_urls.append(compat_url(view_name, view_func))
+
+    return root_urls
 
 
-vulnerable_urlpatterns = [
-    compat_url(r"^vulnpy/cmdi/os-system/?$", _cmdi_os_system),
-    compat_url(r"^vulnpy/cmdi/subprocess-popen/?$", _cmdi_subprocess_popen),
-    compat_url(r"^vulnpy/deserialization/pickle-load/?$", _deserialization_pickle_load),
-    compat_url(
-        r"^vulnpy/deserialization/pickle-loads/?$", _deserialization_pickle_loads
-    ),
-    compat_url(r"^vulnpy/deserialization/yaml-load/?$", _deserialization_yaml_load),
-    compat_url(
-        r"^vulnpy/deserialization/yaml-load-all/?$", _deserialization_yaml_load_all
-    ),
-] + root_urls
+def generate_trigger_urls():
+    trigger_urls = []
+
+    for name, triggers in TRIGGER_MAP.items():
+        for trigger in triggers:
+            view_name = get_trigger_name(name, trigger)
+            view_func = get_trigger_view(name, trigger)
+
+            trigger_urls.append(compat_url(view_name, view_func))
+
+    return trigger_urls
+
+
+vulnerable_urlpatterns = generate_root_urls() + generate_trigger_urls()
 
 # This module can also be used as a standalone ROOT_URLCONF
 urlpatterns = vulnerable_urlpatterns
