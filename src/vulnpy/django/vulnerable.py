@@ -30,7 +30,11 @@ def get_trigger_view(name, trigger):
 
         module = sys.modules.get("vulnpy.trigger.{}".format(name))
         if not module:
-            raise RuntimeError("Please import trigger module {} at the top of {}".format(name, __file__))
+            raise RuntimeError(
+                "Please import trigger module {} at the top of {}".format(
+                    name, __file__
+                )
+            )
 
         trigger_func = get_trigger(module, trigger)
 
