@@ -29,10 +29,14 @@ def get_trigger_view(name, trigger):
         user_input = _get_user_input(request)
 
         module = sys.modules.get("vulnpy.trigger.{}".format(name))
+        if not module:
+            raise RuntimeError("Please import trigger module {} at the top of {}".format(name, __file__))
+
         trigger_func = get_trigger(module, trigger)
 
         if trigger_func:
             trigger_func(user_input)
+
         return HttpResponse(get_template("{}.html".format(name)))
 
     return _view
