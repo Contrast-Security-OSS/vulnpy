@@ -26,4 +26,5 @@ def get_trigger(module, trigger_name):
     try:
         return getattr(module, func_name)
     except AttributeError:
-        return
+        print("Cannot find function {} in module {}", func_name, module.__name__)
+        raise
