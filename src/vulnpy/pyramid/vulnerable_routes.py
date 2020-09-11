@@ -17,12 +17,6 @@ def get_root_pattern(name):
     return "/vulnpy/{}".format(name)
 
 
-def get_root_pattern(name):
-    if name == "home":
-        return "/vulnpy"
-    return "/vulnpy/{}".format(name)
-
-
 def get_trigger_pattern(name, trigger):
     return "/vulnpy/{}/{}".format(name, trigger)
 
