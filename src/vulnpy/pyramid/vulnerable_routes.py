@@ -1,51 +1,8 @@
+import sys
 from pyramid.response import Response
 
 from vulnpy.common import get_template
-from vulnpy.trigger import cmdi, deserialization
-
-
-def _home(request):
-    return Response(get_template("home.html"))
-
-
-def _cmdi(request):
-    return Response(get_template("cmdi.html"))
-
-
-def _cmdi_os_system(request):
-    user_input = _get_user_input(request)
-    cmdi.do_os_system(user_input)
-    return Response(get_template("cmdi.html"))
-
-
-def _cmdi_subprocess_popen(request):
-    user_input = _get_user_input(request)
-    cmdi.do_subprocess_popen(user_input)
-    return Response(get_template("cmdi.html"))
-
-
-def _deserialization_pickle_load(request):
-    user_input = _get_user_input(request)
-    deserialization.do_pickle_load(user_input)
-    return Response(get_template("deserialization.html"))
-
-
-def _deserialization_pickle_loads(request):
-    user_input = _get_user_input(request)
-    deserialization.do_pickle_loads(user_input)
-    return Response(get_template("deserialization.html"))
-
-
-def _deserialization_yaml_load(request):
-    user_input = _get_user_input(request)
-    deserialization.do_yaml_load(user_input)
-    return Response(get_template("deserialization.html"))
-
-
-def _deserialization_yaml_load_all(request):
-    user_input = _get_user_input(request)
-    deserialization.do_yaml_load_all(user_input)
-    return Response(get_template("deserialization.html"))
+from vulnpy.trigger import TRIGGER_MAP, get_trigger, cmdi, deserialization  # noqa: F401
 
 
 def _get_user_input(request):
@@ -54,48 +11,69 @@ def _get_user_input(request):
     return request.POST.get("user_input", "")
 
 
-def includeme(config):
-    """
-    config.include looks for a function with this name specifically
-    """
-    _add_route(config, "vulnpy-root", "/vulnpy", _home)
+def get_root_pattern(name):
+    if name == "home":
+        return "/vulnpy"
+    return "/vulnpy/{}".format(name)
 
-    _add_route(config, "cmdi", "/vulnpy/cmdi", _cmdi)
-    _add_route(config, "cmdi-os-system", "/vulnpy/cmdi/os-system", _cmdi_os_system)
-    _add_route(
-        config,
-        "cmdi-subprocess-popen",
-        "/vulnpy/cmdi/subprocess-popen",
-        _cmdi_subprocess_popen,
-    )
 
-    _add_route(
-        config,
-        "deserialization-pickle-load",
-        "/vulnpy/deserialization/pickle-load",
-        _deserialization_pickle_load,
-    )
+def get_root_pattern(name):
+    if name == "home":
+        return "/vulnpy"
+    return "/vulnpy/{}".format(name)
 
-    _add_route(
-        config,
-        "deserialization-pickle-loads",
-        "/vulnpy/deserialization/pickle-loads",
-        _deserialization_pickle_loads,
-    )
 
-    _add_route(
-        config,
-        "deserialization-yaml-load",
-        "/vulnpy/deserialization/yaml-load",
-        _deserialization_yaml_load,
-    )
+def get_trigger_pattern(name, trigger):
+    return "/vulnpy/{}/{}".format(name, trigger)
 
-    _add_route(
-        config,
-        "deserialization-yaml-load-all",
-        "/vulnpy/deserialization/yaml-load-all",
-        _deserialization_yaml_load_all,
-    )
+
+def get_root_name(name):
+    if name == "home":
+        return "vulnpy-root"
+    return name
+
+
+def get_trigger_name(name, trigger):
+    return "{}-{}".format(name, trigger)
+
+
+def gen_root_view(name):
+    def _root(request):
+        return Response(get_template("{}.html".format(name)))
+
+    return _root
+
+
+def get_trigger_view(name, trigger):
+    def _view(request):
+        user_input = _get_user_input(request)
+
+        module = sys.modules.get("vulnpy.trigger.{}".format(name))
+        trigger_func = get_trigger(module, trigger)
+
+        if trigger_func:
+            trigger_func(user_input)
+        return Response(get_template("{}.html".format(name)))
+
+    return _view
+
+
+def generate_root_urls(config):
+    for name in TRIGGER_MAP:
+        view_name = get_root_name(name)
+        view_pattern = get_root_pattern(name)
+        view_func = gen_root_view(name)
+        _add_route(config, view_name, view_pattern, view_func)
+
+
+def generate_trigger_urls(config):
+    for name, triggers in TRIGGER_MAP.items():
+        for trigger in triggers:
+            view_name = get_trigger_name(name, trigger)
+            view_pattern = get_trigger_pattern(name, trigger)
+            view_func = get_trigger_view(name, trigger)
+
+            _add_route(config, view_name, view_pattern, view_func)
 
 
 def _add_route(config, route_name, pattern, view):
@@ -113,3 +91,11 @@ def _add_route(config, route_name, pattern, view):
     route_name_slash = route_name + "-with-slash"
     config.add_route(route_name_slash, pattern + "/")
     config.add_view(view, route_name=route_name_slash)
+
+
+def includeme(config):
+    """
+    config.include looks for a function with this name specifically
+    """
+    generate_root_urls(config)
+    generate_trigger_urls(config)
