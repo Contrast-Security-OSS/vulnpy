@@ -1,8 +1,7 @@
-import sys
 from pyramid.response import Response
 
 from vulnpy.common import get_template
-from vulnpy.trigger import TRIGGER_MAP, get_trigger, cmdi, deserialization  # noqa: F401
+from vulnpy.trigger import TRIGGER_MAP, get_trigger
 
 
 def _get_user_input(request):
@@ -41,9 +40,7 @@ def gen_root_view(name):
 def get_trigger_view(name, trigger):
     def _view(request):
         user_input = _get_user_input(request)
-
-        module = sys.modules.get("vulnpy.trigger.{}".format(name))
-        trigger_func = get_trigger(module, trigger)
+        trigger_func = get_trigger(name, trigger)
 
         if trigger_func:
             trigger_func(user_input)

@@ -1,7 +1,7 @@
 import inspect
 import sys
 from vulnpy.common import get_template
-from vulnpy.trigger import TRIGGER_MAP, get_trigger, cmdi, deserialization  # noqa: F401
+from vulnpy.trigger import TRIGGER_MAP, get_trigger
 
 
 def get_root_name(name):
@@ -64,8 +64,7 @@ def get_trigger_view(name, trigger):
 
     class _View(baseclass):
         def trigger(self, command):
-            module = sys.modules.get("vulnpy.trigger.{}".format(name))
-            trigger_func = get_trigger(module, trigger)
+            trigger_func = get_trigger(name, trigger)
 
             if trigger_func:
                 trigger_func(command)
