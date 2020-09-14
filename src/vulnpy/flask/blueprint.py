@@ -1,8 +1,7 @@
-import sys
 from flask import Blueprint, request
 
 from vulnpy.common import get_template
-from vulnpy.trigger import TRIGGER_MAP, get_trigger, cmdi, deserialization  # noqa: F401
+from vulnpy.trigger import TRIGGER_MAP, get_trigger
 
 vulnerable_blueprint = Blueprint(
     "vulnpy",
@@ -46,9 +45,7 @@ def generate_root_urls():
 def get_trigger_view(name, trigger):
     def _view():
         user_input = _get_user_input()
-
-        module = sys.modules.get("vulnpy.trigger.{}".format(name))
-        trigger_func = get_trigger(module, trigger)
+        trigger_func = get_trigger(name, trigger)
 
         if trigger_func:
             trigger_func(user_input)

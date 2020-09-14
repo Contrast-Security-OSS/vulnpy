@@ -1,3 +1,5 @@
+from importlib import import_module
+
 TRIGGER_MAP = {
     "home": [],
     "cmdi": [
@@ -13,14 +15,17 @@ TRIGGER_MAP = {
 }
 
 
-def get_trigger(module, trigger_name):
+def get_trigger(name, trigger_name):
     """
     Find a function LIKE trigger_name in the module.
 
-    :param module: Python module
+    :param name: str representing file name where trigger is located
     :param trigger_name: str
     :return: function
     """
+    module_name = "vulnpy.trigger.{}".format(name)
+    module = import_module(module_name)
+
     func_name = "do_{}".format(trigger_name.replace("-", "_"))
 
     try:
