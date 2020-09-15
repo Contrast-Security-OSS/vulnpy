@@ -20,10 +20,25 @@ frameworks when a new trigger is added. To add a new trigger:
 2. Add "do_vulnname_triggername" function in the vulnerability file. **Note the 
 function definition must be prefixed with "do_".**
 
-3. Add a new file under templates/fragments/vulnname.frag.html OR use the existing 
+3. If your trigger requires installing a new python library, add it to setup.py in 
+`trigger_extras`.
+ 
+4. Add a new file under templates/fragments/vulnname.frag.html OR use the existing 
 one to add a new fragment for the trigger. This step may be automated in the future.
 
-4. Add tests under trigger/ and for each of the frameworks to call the new trigger.
+5. Add a new <li> element to the menu bar in templates/fragments/base.html for this 
+vulnname.
+ 
+6. Add tests under trigger/ and for each of the frameworks to call the new trigger.
+
+7. Run an app with `make flask` (or other framework) to test this new vulnerability / 
+trigger(s):
+
+    * No exceptions should appear when running `make flask`
+    * Vulnpy home page should have a link to the vulnerability page in the navbar
+    * Going to the vulnerability page shows the correct number of forms for each 
+    trigger function
+    * Providing input to each of the trigger forms does not produce an exception
 
 
 ## Regenerating Templates

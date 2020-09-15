@@ -110,3 +110,33 @@ def test_unsafe_code_exec(client, method_name, endpoint):
         {"user_input": "1 + 2"},
     )
     assert response.status_code == 200
+
+
+@pytest.mark.parametrize("method_name", ["get", "post"])
+def test_xxe_lxml_etree_fromstring_normal(client, method_name):
+    get_or_post = getattr(client, method_name)
+    response = get_or_post(
+        "/vulnpy/xxe/lxml-etree-fromstring",
+        {"user_input": "<root>attack</root>"},
+    )
+    assert response.status_int == 200
+
+
+@pytest.mark.parametrize("method_name", ["get", "post"])
+def test_xxe_xml_dom_pulldom_parsestring_normal(client, method_name):
+    get_or_post = getattr(client, method_name)
+    response = get_or_post(
+        "/vulnpy/xxe/xml-dom-pulldom-parsestring",
+        {"user_input": "<root>attack</root>"},
+    )
+    assert response.status_int == 200
+
+
+@pytest.mark.parametrize("method_name", ["get", "post"])
+def test_xxe_xml_sax_parsestring_normal(client, method_name):
+    get_or_post = getattr(client, method_name)
+    response = get_or_post(
+        "/vulnpy/xxe/xml-sax-parsestring",
+        {"user_input": "<root>attack</root>"},
+    )
+    assert response.status_int == 200

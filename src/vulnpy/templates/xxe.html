@@ -19,7 +19,6 @@
             <ul class="menu-list">
               <li><a href="/vulnpy/cmdi/">CMD Injection</a></li>
               <li><a href="/vulnpy/deserialization/">Untrusted Deserialization</a></li>
-              <li><a href="/vulnpy/unsafe_code_exec/">Unsafe Code Execution</a></li>
               <li><a href="/vulnpy/xxe/">XXE</a></li>
             </ul>
           </div>
@@ -28,12 +27,12 @@
       <br>
       <div class="column container">
         <!-- ###vulnpy-injection-site### - do not modify this line; it's in a regex -->
-<h1>Cmd Injection: os.system</h1>
+<h1>XXE: lxml.etree.fromstring</h1>
 
-<form action="/vulnpy/cmdi/os-system/" method="get">
+<form action="/vulnpy/xxe/lxml-etree-fromstring/" method="get">
   <div class="field has-addons">
     <div class="control">
-      <input class="input" type="text" name="user_input" placeholder="ls; echo hacked">
+      <input class="input" type="text" name="user_input" placeholder="<root>attack</root>">
     </div>
     <div class="control">
       <button class="button is-info" action="submit">
@@ -44,12 +43,12 @@
 </form>
 <br>
 
-<h1>Cmd Injection: subprocess.popen</h1>
+<h1>XXE: xml.dom.pulldom.parseString</h1>
 
-<form action="/vulnpy/cmdi/subprocess-popen/" method="get">
+<form action="/vulnpy/xxe/xml-dom-pulldom-parsestring/" method="get">
   <div class="field has-addons">
     <div class="control">
-      <input class="input" type="text" name="user_input" placeholder="ls; echo hacked">
+      <input class="input" type="text" name="user_input" placeholder="<root>attack</root>">
     </div>
     <div class="control">
       <button class="button is-info" action="submit">
@@ -58,6 +57,23 @@
     </div>
   </div>
 </form>
+<br>
+
+<h1>XXE: xml.sax.parseString</h1>
+
+<form action="/vulnpy/xxe/xml-sax-parsestring/" method="get">
+  <div class="field has-addons">
+    <div class="control">
+      <input class="input" type="text" name="user_input" placeholder="<root>attack</root>">
+    </div>
+    <div class="control">
+      <button class="button is-info" action="submit">
+        Execute
+      </button>
+    </div>
+  </div>
+</form>
+<br>
         <!-- post-injection site -->
       </div>
     </div>

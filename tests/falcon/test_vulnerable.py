@@ -128,3 +128,27 @@ def test_unsafe_code_exec_normal(client, endpoint):
         params={"user_input": quote("1 + 2")},
     )
     assert response.status_code == 200
+
+
+def test_xxe_lxml_etree_fromstring_normal(client):
+    response = client.simulate_get(
+        "/vulnpy/xxe/lxml-etree-fromstring",
+        params={"user_input": "<root>attack</root>"},
+    )
+    assert response.status_code == 200
+
+
+def test_xxe_xml_dom_pulldom_parsestring_normal(client):
+    response = client.simulate_get(
+        "/vulnpy/xxe/xml-dom-pulldom-parsestring",
+        params={"user_input": "<root>attack</root>"},
+    )
+    assert response.status_code == 200
+
+
+def test_xxe_xml_sax_parsestring_normal(client):
+    response = client.simulate_get(
+        "/vulnpy/xxe/xml-sax-parsestring",
+        params={"user_input": "<root>attack</root>"},
+    )
+    assert response.status_code == 200

@@ -152,3 +152,27 @@ def test_unsafe_code_exec(client, method_name, endpoint):
         data={"user_input": "1 + 2"},
     )
     assert response.status_code == 200
+
+
+def test_xxe_lxml_etree_fromstring_normal(client):
+    response = client.post(
+        "/vulnpy/xxe/lxml-etree-fromstring/",
+        data={"user_input": "<root>attack</root>"},
+    )
+    assert response.status_code == 200
+
+
+def test_xxe_xml_dom_pulldom_parsestring_normal(client):
+    response = client.post(
+        "/vulnpy/xxe/xml-dom-pulldom-parsestring/",
+        data={"user_input": "<root>attack</root>"},
+    )
+    assert response.status_code == 200
+
+
+def test_xxe_xml_sax_parsestring_normal(client):
+    response = client.post(
+        "/vulnpy/xxe/xml-sax-parsestring/",
+        data={"user_input": "<root>attack</root>"},
+    )
+    assert response.status_code == 200
