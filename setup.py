@@ -15,7 +15,7 @@ falcon_extras = ["falcon"] + trigger_extras
 flask_extras = ["Flask"] + trigger_extras
 pyramid_extras = ["pyramid"] + trigger_extras
 
-extra_extras = ["mock==3.*", "WebTest", "gunicorn"]
+extra_extras = ["mock==3.*", "WebTest", "gunicorn", "six"]
 
 all_extras = (
     django_extras
