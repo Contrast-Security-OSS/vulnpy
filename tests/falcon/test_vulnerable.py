@@ -1,6 +1,7 @@
 import mock
 import pytest
 import falcon
+from six.moves.urllib_parse import quote
 
 from falcon import testing
 
@@ -116,5 +117,14 @@ def test_deserialization_yaml_load_all_normal(client):
         params={
             "user_input": '!!python/object/apply:subprocess.Popen [["echo", "Hello World"]]'
         },
+    )
+    assert response.status_code == 200
+
+
+@pytest.mark.parametrize("endpoint", ["eval", "exec", "compile"])
+def test_unsafe_code_exec_normal(client, endpoint):
+    response = client.simulate_get(
+        "/vulnpy/unsafe_code_exec/{}".format(endpoint),
+        params={"user_input": quote("1 + 2")},
     )
     assert response.status_code == 200

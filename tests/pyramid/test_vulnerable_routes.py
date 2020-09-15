@@ -99,3 +99,14 @@ def test_deserialization_yaml_load_all_normal(client, method_name):
         },
     )
     assert response.status_int == 200
+
+
+@pytest.mark.parametrize("method_name", ["get", "post"])
+@pytest.mark.parametrize("endpoint", ["eval", "exec", "compile"])
+def test_unsafe_code_exec(client, method_name, endpoint):
+    get_or_post = getattr(client, method_name)
+    response = get_or_post(
+        "/vulnpy/unsafe_code_exec/{}".format(endpoint),
+        {"user_input": "1 + 2"},
+    )
+    assert response.status_code == 200
