@@ -111,7 +111,36 @@ def test_deserialization_yaml_load_all_normal(client, method_name):
 def test_unsafe_code_exec_normal(client, method_name, endpoint):
     get_or_post = getattr(client, method_name)
     response = get_or_post(
-        "/vulnpy/unsafe_code_exec/{}/".format(endpoint),
-        {"user_input": "1 + 2"},
+        "/vulnpy/unsafe_code_exec/{}/".format(endpoint), {"user_input": "1 + 2"}
+    )
+    assert response.status_code == 200
+
+
+@pytest.mark.parametrize("method_name", ["get", "post"])
+def test_xxe_lxml_etree_fromstring_normal(client, method_name):
+    get_or_post = getattr(client, method_name)
+    response = get_or_post(
+        "/vulnpy/xxe/lxml-etree-fromstring",
+        {"user_input": "<root>attack</root>"},
+    )
+    assert response.status_code == 200
+
+
+@pytest.mark.parametrize("method_name", ["get", "post"])
+def test_xxe_xml_dom_pulldom_parsestring_normal(client, method_name):
+    get_or_post = getattr(client, method_name)
+    response = get_or_post(
+        "/vulnpy/xxe/xml-dom-pulldom-parsestring",
+        {"user_input": "<root>attack</root>"},
+    )
+    assert response.status_code == 200
+
+
+@pytest.mark.parametrize("method_name", ["get", "post"])
+def test_xxe_xml_sax_parsestring_normal(client, method_name):
+    get_or_post = getattr(client, method_name)
+    response = get_or_post(
+        "/vulnpy/xxe/xml-sax-parsestring",
+        {"user_input": "<root>attack</root>"},
     )
     assert response.status_code == 200
