@@ -1,6 +1,6 @@
 import pytest
 
-from vulnpy.trigger import TRIGGER_MAP, DATA
+from vulnpy.trigger import TRIGGER_MAP
 
 VULN_NAMES = [x for x in TRIGGER_MAP if x != "util"]
 

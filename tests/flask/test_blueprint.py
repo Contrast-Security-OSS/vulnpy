@@ -36,6 +36,6 @@ def test_trigger(client, request_method, view_name, trigger_name):
 
     response = get_or_post(
         "/vulnpy/{}/{}/?user_input={}".format(view_name, trigger_name, data),
-        data={"user_input": data}
+        data={"user_input": data},
     )
     assert response.status_code == 200
