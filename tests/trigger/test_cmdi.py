@@ -1,30 +1,30 @@
-import pytest
-
 from vulnpy.trigger import cmdi
+from tests.trigger.base_test import BaseTriggerTest
 
 
-def test_do_os_system():
-    assert cmdi.do_os_system("echo hacked") == 0
+class TestOsSystem(BaseTriggerTest):
+    @property
+    def trigger_func(self):
+        return cmdi.do_os_system
+
+    @property
+    def good_input(self):
+        return "echo hacked", 0
+
+    @property
+    def exception_input(self):
+        return None
 
 
-def test_do_os_system_bad_command():
-    assert cmdi.do_os_system("barrrrrr bad command") != 0
+class TestSubprocessPopen(BaseTriggerTest):
+    @property
+    def trigger_func(self):
+        return cmdi.do_subprocess_popen
 
+    @property
+    def good_input(self):
+        return "echo hacked", b"hacked\n"
 
-def test_do_os_system_exception():
-    with pytest.raises(TypeError):
-        cmdi.do_os_system(None)
-
-
-def test_do_subprocess_popen():
-    assert cmdi.do_subprocess_popen("echo hacked") == b"hacked\n"
-
-
-def test_do_subprocess_popen_bad_command():
-    """This makes some assumptions about the host system, but it seems to be generic enough"""
-    assert b"not found" in cmdi.do_subprocess_popen("foooooooo this is not a command")
-
-
-def test_do_subprocess_popen_exception():
-    with pytest.raises(TypeError):
-        cmdi.do_subprocess_popen(None)
+    @property
+    def exception_input(self):
+        return None
