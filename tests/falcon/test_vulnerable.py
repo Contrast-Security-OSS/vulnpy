@@ -55,4 +55,3 @@ def test_handle_exception(mocked_trigger, client):
     )
     assert mocked_trigger.called
     assert response.status_code == 200
-
