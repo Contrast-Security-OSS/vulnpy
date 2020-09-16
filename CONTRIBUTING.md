@@ -32,7 +32,7 @@ vulnname.
 6. Add tests under trigger/ and make sure to use `BaseTriggerTest`. Tests must be 
 added until - at a minimum - full test coverage is reached.
     * As part of this step you may need to update `DATA` if this is a new vulnerability.
-    
+
 7. Run an app with `make flask` (or other framework) to test this new vulnerability / 
 trigger(s):
 
