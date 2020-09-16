@@ -26,11 +26,13 @@ function definition must be prefixed with "do_".**
 4. Add a new file under templates/fragments/vulnname.frag.html OR use the existing 
 one to add a new fragment for the trigger. This step may be automated in the future.
 
-5. Add a new <li> element to the menu bar in templates/fragments/base.html for this 
+5. Add a new `<li>` element to the menu bar in templates/fragments/base.html for this 
 vulnname.
  
-6. Add tests under trigger/ and for each of the frameworks to call the new trigger.
-
+6. Add tests under trigger/ and make sure to use `BaseTriggerTest`. Tests must be 
+added until - at a minimum - full test coverage is reached.
+    * As part of this step you may need to update `DATA` if this is a new vulnerability.
+    
 7. Run an app with `make flask` (or other framework) to test this new vulnerability / 
 trigger(s):
 
