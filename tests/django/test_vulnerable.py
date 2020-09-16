@@ -2,16 +2,8 @@ import pytest
 from django.conf import settings
 from django.test import Client
 
-from vulnpy.trigger import TRIGGER_MAP, DATA
-
-vuln_names = [x for x in TRIGGER_MAP if x != "util"]
-
-arglist = []
-for vuln_name, trigger_names in TRIGGER_MAP.items():
-    if not trigger_names:
-        continue
-    for trigger in trigger_names:
-        arglist.append((vuln_name, trigger))
+from vulnpy.trigger import DATA
+from tests import parametrize_root, parametrize_triggers
 
 
 @pytest.fixture(scope="module")
@@ -22,7 +14,7 @@ def client():
     return Client()
 
 
-@pytest.mark.parametrize("view_name", vuln_names)
+@parametrize_root
 def test_root_views(client, view_name):
     if view_name == "home":
         response = client.get("/vulnpy")
@@ -31,7 +23,7 @@ def test_root_views(client, view_name):
     assert response.status_code == 200
 
 
-@pytest.mark.parametrize("view_name,trigger_name", arglist)
+@parametrize_triggers
 @pytest.mark.parametrize("request_method", ["get", "post"])
 def test_trigger(client, request_method, view_name, trigger_name):
     get_or_post = getattr(client, request_method)
