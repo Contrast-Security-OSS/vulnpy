@@ -20,11 +20,8 @@ def client():
 
 
 @parametrize_root
-def test_root_views(client, view_name):
-    if view_name == "home":
-        response = client.simulate_get("/vulnpy")
-    else:
-        response = client.simulate_get("/vulnpy/{}".format(view_name))
+def test_root_views(client, view_path):
+    response = client.simulate_get(view_path)
     assert response.status_code == 200
 
 
@@ -33,10 +30,10 @@ def test_root_views(client, view_name):
 def test_trigger(client, request_method, view_name, trigger_name):
     get_or_post = getattr(client, request_method)
 
-    data = DATA.get(view_name)
+    data = DATA[view_name]
 
-    if view_name == "unsafe_code_exec":
-        data = quote(data)
+    # to make unsafe_code_exec trigger work
+    data = quote(data)
 
     response = get_or_post(
         "/vulnpy/{}/{}".format(view_name, trigger_name),
