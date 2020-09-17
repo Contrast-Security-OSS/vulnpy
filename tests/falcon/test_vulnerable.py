@@ -41,6 +41,9 @@ def test_trigger(client, request_method, view_name, trigger_name):
     )
     assert response.status_code == 200
 
+    if view_name == "xss":
+        assert "<p>XSS: {}</p>".format(DATA.get(view_name)) in str(response.content)
+
 
 @mock.patch(
     "vulnpy.trigger.cmdi.do_os_system", side_effect=Exception("something bad happened")

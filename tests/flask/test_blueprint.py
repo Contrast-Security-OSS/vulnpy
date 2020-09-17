@@ -36,3 +36,6 @@ def test_trigger(client, request_method, view_name, trigger_name):
         data={"user_input": data},
     )
     assert response.status_code == 200
+
+    if view_name == "xss":
+        assert "<p>XSS: {}</p>".format(data) in str(response.get_data())

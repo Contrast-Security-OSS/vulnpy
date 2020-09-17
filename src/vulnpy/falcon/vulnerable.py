@@ -39,7 +39,10 @@ def gen_root_view(name):  # noqa: C901
                 else:
                     self.trigger(user_input)
 
-                _set_response(resp, "{}.html".format(name))
+                if name == "xss":
+                    _set_xss_response(resp, "{}.html".format(name), user_input)
+                else:
+                    _set_response(resp, "{}.html".format(name))
 
     return _View
 
@@ -113,4 +116,12 @@ def _set_response(resp, path):
     Set the response body and Content-Type
     """
     resp.body = get_template(path)
+    resp.content_type = "text/html"
+
+
+def _set_xss_response(resp, path, user_input):
+    template = get_template(path)
+    template += "<p>XSS: " + user_input + "</p>"
+
+    resp.body = template
     resp.content_type = "text/html"
