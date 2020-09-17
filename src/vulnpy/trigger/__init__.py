@@ -10,6 +10,6 @@ DATA = {
     "cmdi": "echo attack",
     "deserialization": "csubprocess\ncheck_output\n(S'ls'\ntR.",
     "unsafe_code_exec": "1 + 2",
-    "xss": "",
+    "xss": "attack",
     "xxe": "<root>attack</root>",
 }
