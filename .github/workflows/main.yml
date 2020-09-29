@@ -4,7 +4,7 @@ on: [push]
 
 jobs:
 
-  lint:
+  black:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -12,11 +12,24 @@ jobs:
         with:
           python-version: 3.7
       - run: pip install tox
-      - name: Run linters
-        run: tox -e black,flake8
+      - name: Run black
+        run: tox -e black
+
+  flake8:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: 2.7
+      - run: pip install tox
+      - name: Run flake8
+        run: tox -e flake8
 
   test:
-    needs: lint
+    needs:
+      - black
+      - flake8
     runs-on: ubuntu-latest
     strategy:
       matrix:
