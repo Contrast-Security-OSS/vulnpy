@@ -3,11 +3,7 @@ from flask import Blueprint, request
 from vulnpy.common import get_template
 from vulnpy.trigger import TRIGGER_MAP, get_trigger
 
-vulnerable_blueprint = Blueprint(
-    "vulnpy",
-    __name__,
-    url_prefix="/vulnpy",
-)
+vulnerable_blueprint = Blueprint("vulnpy", __name__, url_prefix="/vulnpy")
 
 
 def _get_user_input():
