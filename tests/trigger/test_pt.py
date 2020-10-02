@@ -1,7 +1,7 @@
 import os
 
 import pytest
-import six
+from vulnpy.vendor import six
 
 from vulnpy.trigger import pt
 from tests.trigger.base_test import BaseTriggerTest
