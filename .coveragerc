@@ -2,3 +2,8 @@
 source =
     src/vulnpy/
     */site-packages/vulnpy
+
+[run]
+omit =
+    vulnpy/vendor/*
+    */vulnpy/vendor/*

@@ -1,5 +1,5 @@
 import pickle
-from six import PY2
+from vulnpy.vendor.six import PY2
 
 from vulnpy.trigger import deserialization
 from tests.trigger.base_test import BaseTriggerTest

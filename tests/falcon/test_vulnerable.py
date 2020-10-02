@@ -1,7 +1,7 @@
 import mock
 import pytest
 import falcon
-from six.moves.urllib_parse import quote
+from vulnpy.vendor.six.moves.urllib_parse import quote
 
 from falcon import testing
 

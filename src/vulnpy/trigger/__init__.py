@@ -9,7 +9,9 @@ TRIGGER_MAP = create_trigger_map()
 DATA = {
     "cmdi": "echo attack",
     "deserialization": "csubprocess\ncheck_output\n(S'ls'\ntR.",
+    "hash": "hashme",
     "pt": "../../etc/passwd",
+    "rand": "seed",
     "unsafe_code_exec": "1 + 2",
     "xss": "attack",
     "xxe": "<root>attack</root>",
