@@ -2,7 +2,11 @@
 max-line-length = 100
 max-complexity = 5
 ignore =
-	# E203 whitespace before ‘:’ (Not PEP8 compliant, Python Black)
+    # E203 whitespace before ‘:’ (Not PEP8 compliant, Python Black)
     E203
-	# W503 line break before binary operator (Not PEP8 compliant, Python Black)
+    # W503 line break before binary operator (Not PEP8 compliant, Python Black)
     W503
+exclude =
+	vendor
+	.tox
+	.git
