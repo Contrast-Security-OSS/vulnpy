@@ -1,0 +1,206 @@
+<h1>SSRF: urllib.urlopen</h1>
+
+<form action="/vulnpy/ssrf/legacy-urlopen/" method="get">
+  <div class="field has-addons">
+    <div class="control">
+      <input class="input" type="text" name="user_input" placeholder="http://attacker.com">
+    </div>
+    <div class="control">
+      <button class="button is-info" action="submit">
+        Execute
+      </button>
+    </div>
+  </div>
+</form>
+<br>
+
+<h1>SSRF: urllib2.urlopen (PY2) / urllib.request.urlopen (PY3) via string</h1>
+
+<form action="/vulnpy/ssrf/urlopen-str/" method="get">
+  <div class="field has-addons">
+    <div class="control">
+      <input class="input" type="text" name="user_input" placeholder="http://attacker.com">
+    </div>
+    <div class="control">
+      <button class="button is-info" action="submit">
+        Execute
+      </button>
+    </div>
+  </div>
+</form>
+<br>
+
+<h1>SSRF: urllib2.urlopen (PY2) / urllib.request.urlopen (PY3) via Request object</h1>
+
+<form action="/vulnpy/ssrf/urlopen-obj/" method="get">
+  <div class="field has-addons">
+    <div class="control">
+      <input class="input" type="text" name="user_input" placeholder="http://attacker.com">
+    </div>
+    <div class="control">
+      <button class="button is-info" action="submit">
+        Execute
+      </button>
+    </div>
+  </div>
+</form>
+<br>
+
+<h1>SSRF: HTTPConnection.__init__</h1>
+
+<form action="/vulnpy/ssrf/httpconnection-init/" method="get">
+  <div class="field has-addons">
+    <div class="control">
+      <input class="input" type="text" name="user_input" placeholder="attacker.com">
+    </div>
+    <div class="control">
+      <button class="button is-info" action="submit">
+        Execute
+      </button>
+    </div>
+  </div>
+</form>
+<br>
+
+<h1>SSRF: HTTPConnection.request via url (safe)</h1>
+
+<form action="/vulnpy/ssrf/httpconnection-request-url/" method="get">
+  <div class="field has-addons">
+    <div class="control">
+      <input class="input" type="text" name="user_input" placeholder="/some/url/path/">
+    </div>
+    <div class="control">
+      <button class="button is-info" action="submit">
+        Execute
+      </button>
+    </div>
+  </div>
+</form>
+<br>
+
+<h1>SSRF: HTTPConnection.request via method</h1>
+
+<form action="/vulnpy/ssrf/httpconnection-request-method/" method="get">
+  <div class="field has-addons">
+    <div class="control">
+      <input class="input" type="text" name="user_input" placeholder="DELETE">
+    </div>
+    <div class="control">
+      <button class="button is-info" action="submit">
+        Execute
+      </button>
+    </div>
+  </div>
+</form>
+<br>
+
+<h1>SSRF: HTTPConnection.putrequest via url (safe)</h1>
+
+<form action="/vulnpy/ssrf/httpconnection-putrequest-url/" method="get">
+  <div class="field has-addons">
+    <div class="control">
+      <input class="input" type="text" name="user_input" placeholder="/some/url/path/">
+    </div>
+    <div class="control">
+      <button class="button is-info" action="submit">
+        Execute
+      </button>
+    </div>
+  </div>
+</form>
+<br>
+
+<h1>SSRF: HTTPConnection.putrequest via method</h1>
+
+<form action="/vulnpy/ssrf/httpconnection-putrequest-method/" method="get">
+  <div class="field has-addons">
+    <div class="control">
+      <input class="input" type="text" name="user_input" placeholder="DELETE">
+    </div>
+    <div class="control">
+      <button class="button is-info" action="submit">
+        Execute
+      </button>
+    </div>
+  </div>
+</form>
+<br>
+
+<h1>SSRF: HTTPSConnection.__init__</h1>
+
+<form action="/vulnpy/ssrf/httpsconnection-init/" method="get">
+  <div class="field has-addons">
+    <div class="control">
+      <input class="input" type="text" name="user_input" placeholder="attacker.com">
+    </div>
+    <div class="control">
+      <button class="button is-info" action="submit">
+        Execute
+      </button>
+    </div>
+  </div>
+</form>
+<br>
+
+<h1>SSRF: HTTPSConnection.request via url (safe)</h1>
+
+<form action="/vulnpy/ssrf/httpsconnection-request-url/" method="get">
+  <div class="field has-addons">
+    <div class="control">
+      <input class="input" type="text" name="user_input" placeholder="/some/url/path/">
+    </div>
+    <div class="control">
+      <button class="button is-info" action="submit">
+        Execute
+      </button>
+    </div>
+  </div>
+</form>
+<br>
+
+<h1>SSRF: HTTPSConnection.request via method</h1>
+
+<form action="/vulnpy/ssrf/httpsconnection-request-method/" method="get">
+  <div class="field has-addons">
+    <div class="control">
+      <input class="input" type="text" name="user_input" placeholder="DELETE">
+    </div>
+    <div class="control">
+      <button class="button is-info" action="submit">
+        Execute
+      </button>
+    </div>
+  </div>
+</form>
+<br>
+
+<h1>SSRF: HTTPSConnection.putrequest via url (safe)</h1>
+
+<form action="/vulnpy/ssrf/httpsconnection-putrequest-url/" method="get">
+  <div class="field has-addons">
+    <div class="control">
+      <input class="input" type="text" name="user_input" placeholder="/some/url/path/">
+    </div>
+    <div class="control">
+      <button class="button is-info" action="submit">
+        Execute
+      </button>
+    </div>
+  </div>
+</form>
+<br>
+
+<h1>SSRF: HTTPSConnection.putrequest via method</h1>
+
+<form action="/vulnpy/ssrf/httpsconnection-putrequest-method/" method="get">
+  <div class="field has-addons">
+    <div class="control">
+      <input class="input" type="text" name="user_input" placeholder="DELETE">
+    </div>
+    <div class="control">
+      <button class="button is-info" action="submit">
+        Execute
+      </button>
+    </div>
+  </div>
+</form>
