@@ -12,6 +12,7 @@ DATA = {
     "hash": "hashme",
     "pt": "../../etc/passwd",
     "rand": "seed",
+    "ssrf": "localhost:6502",
     "unsafe_code_exec": "1 + 2",
     "xss": "attack",
     "xxe": "<root>attack</root>",
