@@ -101,3 +101,12 @@ make (your_framework)
 
 For example, `pip install -e ".[flask]" && make flask` launches a simple flask webapp with vulnpy
 endpoints.
+
+### Note on SSRF
+
+By default, SSRF requests (requests made by the webserver to a third party) are mocked out, meaning
+vulnpy will not send real requests when invoking SSRF endpoints. To disable this behavior and
+enable vulnpy to send real network requests, set the VULNPY_REAL_SSRF_REQUESTS to any nonzero value.
+The reason for this is simply to avoid accidentally overwhelming a third-party server when testing.
+
+Vulnpy's sample web applications make use of this option.

@@ -1,18 +1,9 @@
-import io
-
 import mock
+import os
 import pytest
 
 from vulnpy.trigger import ssrf
 from tests.trigger.base_test import BaseTriggerTest
-
-
-@pytest.fixture(scope="function", autouse=True)
-def mock_connection():
-    mock_socket = mock.MagicMock()
-    mock_socket.makefile.return_value = io.BytesIO(b"HTTP/1.1 200 OK")
-    with mock.patch("socket.create_connection", return_value=mock_socket):
-        yield
 
 
 class BaseSsrfTest(BaseTriggerTest):
@@ -149,3 +140,21 @@ class TestHttpsconnectionInit(BaseSsrfTest):
     @property
     def trigger_func(self):
         return ssrf.do_httpsconnection_init
+
+
+@pytest.fixture(scope="class")
+def unmock_connection():
+    """
+    Enable a real SSRF request for just one test.
+    """
+    with mock.patch.dict(
+        os.environ, {"VULNPY_REAL_SSRF_REQUESTS": "any-nonzero-value"}
+    ):
+        yield
+
+
+@pytest.mark.usefixtures("unmock_connection")
+class TestUrlopenStrUnmocked(BaseUrlopenTest):
+    @property
+    def trigger_func(self):
+        return ssrf.do_urlopen_str
