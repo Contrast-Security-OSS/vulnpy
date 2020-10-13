@@ -7,6 +7,10 @@ interchangeably depending on the version of python. We refer
 to the original PY2 urllib module as "legacy".
 """
 
+import io
+import mock
+import os
+
 from vulnpy.vendor import six
 
 if six.PY2:
@@ -27,6 +31,29 @@ TRUSTED_METHOD = "GET"
 TRUSTED_URL = "/"
 
 
+def mock_connection(func):
+    """
+    Mock out socket connections for SSRF unless we see the
+    VULNPY_REAL_SSRF_REQUESTS environment variable. This should
+    only be used when vulnpy is being stood up as a real webapp.
+
+    For unit testing with vulnpy, it's probably best to use the
+    default behavior to avoid overloading some third-party server.
+    """
+
+    def wrapper(*args):
+        if os.environ.get("VULNPY_REAL_SSRF_REQUESTS"):
+            return func(*args)
+
+        mock_socket = mock.MagicMock()
+        mock_socket.makefile.return_value = io.BytesIO(b"HTTP/1.1 200 OK")
+        with mock.patch("socket.create_connection", return_value=mock_socket):
+            return func(*args)
+
+    return wrapper
+
+
+@mock_connection
 def _urlopen(urlopen_func, arg):
     try:
         return urlopen_func(arg).getcode()
@@ -61,6 +88,7 @@ def do_urlopen_obj(user_input):
     return _urlopen(urlopen, req)
 
 
+@mock_connection
 def _request(user_input, connection_class, method_name, vulnerable_url):
     try:
         c = connection_class(TRUSTED_HOST)
@@ -110,6 +138,7 @@ def do_httpsconnection_putrequest_method(user_input):
     return _request(user_input, HTTPSConnection, "putrequest", False)
 
 
+@mock_connection
 def _request_init(user_input, connection_class):
     try:
         c = connection_class(user_input)
