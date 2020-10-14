@@ -12,6 +12,7 @@ DATA = {
     "hash": "hashme",
     "pt": "../../etc/passwd",
     "rand": "seed",
+    "sqli": "d', '4'),('e",
     "ssrf": "attacker.com",
     "unsafe_code_exec": "1 + 2",
     "xss": "attack",
