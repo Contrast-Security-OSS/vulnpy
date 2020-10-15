@@ -13,7 +13,7 @@ class BaseSqliTest(BaseTriggerTest):
         pass
 
     def test_exception_caught(self):
-        assert self.trigger_func(self.exception_input) == "<>"
+        assert self.trigger_func(self.exception_input) == "error"
 
     @property
     def good_input(self):
