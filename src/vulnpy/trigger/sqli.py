@@ -24,7 +24,7 @@ def _execute(db_func):
         all_rows = cursor.execute(SELECT_ALL)
         return ";".join([",".join(row) for row in all_rows])
     except Exception:
-        return "<>"
+        return "error"
 
 
 EXECUTE_QUERY_FMT = "INSERT INTO Character VALUES ('{}', '1')"
