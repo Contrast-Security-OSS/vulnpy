@@ -14,6 +14,7 @@ django_extras = ["Django"] + trigger_extras
 falcon_extras = ["falcon"] + trigger_extras
 flask_extras = ["Flask"] + trigger_extras
 pyramid_extras = ["pyramid"] + trigger_extras
+wsgi_extras = [] + trigger_extras
 
 extra_extras = ["WebTest", "gunicorn", "tox"]
 
@@ -22,6 +23,7 @@ all_extras = (
     + falcon_extras
     + flask_extras
     + pyramid_extras
+    + wsgi_extras
     + extra_extras
     + trigger_extras
 )
@@ -60,6 +62,7 @@ setup(
         "falcon": falcon_extras,
         "flask": flask_extras,
         "pyramid": pyramid_extras,
+        "wsgi": wsgi_extras,
         "trigger": trigger_extras,
     },
 )

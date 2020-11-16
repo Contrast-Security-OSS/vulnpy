@@ -85,6 +85,18 @@ app = Falcon.API()
 vulnpy.falcon.add_vulnerable_routes(app)
 ```
 
+### WSGI
+
+Install vulnpy with wsgi extensions:
+
+```
+pip install 'git+git://github.com/Contrast-Security-OSS/vulnpy#egg=vulnpy[wsgi]'
+```
+
+`vulnpy.wsgi.vulnerable_app` is a vulnerable WSGI application. This versatile component
+can be used with a variety of frameworks. For example, Pylons provides a `Cascade` class,
+which can be used to compose WSGI applications serially.
+
 ## Sample Servers
 
 `vulnpy` is intended to extend the functionality of an existing web application. However, for
