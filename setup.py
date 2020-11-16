@@ -60,5 +60,6 @@ setup(
         "falcon": falcon_extras,
         "flask": flask_extras,
         "pyramid": pyramid_extras,
+        "trigger": trigger_extras,
     },
 )
