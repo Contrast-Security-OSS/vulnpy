@@ -15,3 +15,6 @@ pyramid: templates
 
 django: templates
 	VULNPY_REAL_SSRF_REQUESTS=true python apps/django_app.py runserver $(HOST):$(PORT)
+
+wsgi: templates
+	VULNPY_REAL_SSRF_REQUESTS=true python apps/wsgi_app.py $(HOST) $(PORT)
