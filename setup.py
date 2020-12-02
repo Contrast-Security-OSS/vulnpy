@@ -8,7 +8,7 @@ try:
 except IOError:
     README = ""
 
-trigger_extras = ["PyYAML>=5.1", "lxml==4.3.1", "mock==3.*"]
+trigger_extras = ["PyYAML>=5.1", "lxml>=4.3.1", "mock==3.*"]
 
 django_extras = ["Django"] + trigger_extras
 falcon_extras = ["falcon"] + trigger_extras
