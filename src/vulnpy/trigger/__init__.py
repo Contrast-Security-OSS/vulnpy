@@ -12,7 +12,8 @@ DATA = {
     "hash": "hashme",
     "pt": "../../etc/passwd",
     "rand": "seed",
-    "redos": "((a)+)+",
+    "redos": "anything",  # user input can be anything. The regex to be compared
+    # against the REDOS regex may be be hardcoded.
     "sqli": "d', '4'),('e",
     "ssrf": "attacker.com",
     "unsafe_code_exec": "1 + 2",
