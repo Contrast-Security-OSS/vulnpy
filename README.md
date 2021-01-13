@@ -97,10 +97,12 @@ pip install 'git+git://github.com/Contrast-Security-OSS/vulnpy#egg=vulnpy[wsgi]'
 can be used with a variety of frameworks. For example, Pylons provides a `Cascade` class,
 which can be used to compose WSGI applications serially.
 
-## Sample Servers
+### Sample Servers
 
 `vulnpy` is intended to extend the functionality of an existing web application. However, for
 convenience, we provide tiny webapps for each supported framework with `vulnpy` attached.
+
+#### Running Directly
 
 To serve a webapp on your local machine,
 - check out the source repo and `cd` into it
@@ -113,6 +115,22 @@ make (your_framework)
 
 For example, `pip install -e ".[flask]" && make flask` launches a simple flask webapp with vulnpy
 endpoints.
+
+To run with Contrast, install the agent (`pip install -U contrast-agent`) and set
+`VULNPY_USE_CONTRAST=true` before running your desired `make` command.
+
+#### Running with Contrast in Docker
+
+`vulnpy` provides a Dockerfile that is also preconfigured to enable Contrast Security's
+instrumentation. To run a `vulnpy` web server with Contrast enabled using Docker:
+
+1. Copy a `contrast_security.yaml` configuration file into the `vulnpy` root directory
+2. Build the image with `docker build -t vulnpy:latest .` from the `vulnpy` root
+3. Run the container with `docker run --rm -it -p <port>:<port> -e PORT=<port> vulnpy`
+	* Select a value for `<port>` to expose this port on your host machine
+	* Optionally specify your framework with `-e FRAMEWORK=<some_framework>`
+	* Framework options include django, falcon, flask, pyramid, and wsgi (default)
+4. The webserver is now running on your selected port on the host machine
 
 ### Note on SSRF
 
