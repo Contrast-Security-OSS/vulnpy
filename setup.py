@@ -8,24 +8,24 @@ try:
 except IOError:
     README = ""
 
-trigger_extras = ["PyYAML>=5.1", "lxml>=4.3.1", "mock==3.*"]
+# NOTE: a typical webserver is included with framework dependencies if necessary
+trigger_extras = {"PyYAML>=5.1", "lxml>=4.3.1", "mock==3.*"}
+django_extras = {"Django"} | trigger_extras
+falcon_extras = {"falcon", "gunicorn"} | trigger_extras
+flask_extras = {"Flask"} | trigger_extras
+pyramid_extras = {"pyramid", "waitress"} | trigger_extras
+wsgi_extras = trigger_extras
 
-django_extras = ["Django"] + trigger_extras
-falcon_extras = ["falcon"] + trigger_extras
-flask_extras = ["Flask"] + trigger_extras
-pyramid_extras = ["pyramid"] + trigger_extras
-wsgi_extras = [] + trigger_extras
-
-extra_extras = ["WebTest", "gunicorn", "tox"]
+dev_extras = {"WebTest", "gunicorn", "tox"}
 
 all_extras = (
-    django_extras
-    + falcon_extras
-    + flask_extras
-    + pyramid_extras
-    + wsgi_extras
-    + extra_extras
-    + trigger_extras
+    trigger_extras
+    | django_extras
+    | falcon_extras
+    | flask_extras
+    | pyramid_extras
+    | wsgi_extras
+    | dev_extras
 )
 
 setup(

@@ -3,6 +3,7 @@
 .pytest_cache
 .coverage.*
 .coverage
+*.log
 
 # python
 *.pyc
@@ -15,3 +16,7 @@ dist
 
 # other
 .DS_Store
+
+# contrast
+contrast_security.yml
+contrast_security.yaml
