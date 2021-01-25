@@ -125,7 +125,7 @@ To run with Contrast, install the agent (`pip install -U contrast-agent`) and se
 instrumentation. To run a `vulnpy` web server with Contrast enabled using Docker:
 
 1. Copy a `contrast_security.yaml` configuration file into the `vulnpy` root directory
-2. Build the image with `docker build -t vulnpy:latest .` from the `vulnpy` root
+2. Build the image with `docker build -t vulnpy .` from the `vulnpy` root
 3. Run the container with `docker run --rm -it -p <port>:<port> -e PORT=<port> vulnpy`
 	* Select a value for `<port>` to expose this port on your host machine
 	* Optionally specify your framework with `-e FRAMEWORK=<some_framework>`
