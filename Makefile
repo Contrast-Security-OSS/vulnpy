@@ -20,3 +20,6 @@ django: templates
 
 wsgi: templates
 	python apps/wsgi_app.py $(HOST) $(PORT)
+
+bottle: templates
+	python apps/bottle_app.py $(HOST) $(PORT)

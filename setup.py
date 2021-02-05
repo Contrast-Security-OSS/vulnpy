@@ -15,6 +15,7 @@ falcon_extras = {"falcon", "gunicorn"} | trigger_extras
 flask_extras = {"Flask"} | trigger_extras
 pyramid_extras = {"pyramid", "waitress"} | trigger_extras
 wsgi_extras = trigger_extras
+bottle_extras = {"bottle"} | trigger_extras
 
 dev_extras = {"WebTest", "gunicorn", "tox"}
 
@@ -26,6 +27,7 @@ all_extras = (
     | pyramid_extras
     | wsgi_extras
     | dev_extras
+    | bottle_extras
 )
 
 setup(
@@ -62,6 +64,7 @@ setup(
         "falcon": falcon_extras,
         "flask": flask_extras,
         "pyramid": pyramid_extras,
+        "bottle": bottle_extras,
         "wsgi": wsgi_extras,
         "trigger": trigger_extras,
     },

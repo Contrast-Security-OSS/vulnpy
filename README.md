@@ -97,6 +97,25 @@ pip install 'git+git://github.com/Contrast-Security-OSS/vulnpy#egg=vulnpy[wsgi]'
 can be used with a variety of frameworks. For example, Pylons provides a `Cascade` class,
 which can be used to compose WSGI applications serially.
 
+### Bottle
+
+Install vulnpy with bottle extensions:
+
+```
+pip install 'git+git://github.com/Contrast-Security-OSS/vulnpy#egg=vulnpy[bottle]'
+```
+
+Use the `add_vulnerable_routes` function to register vulnpy's routes with your `bottle`
+application:
+
+```py
+from bottle import Bottle
+from vulnpy.bottle import add_vulnerable_routes
+
+app = Bottle()
+add_vulnerable_routes(app)
+```
+
 ### Sample Servers
 
 `vulnpy` is intended to extend the functionality of an existing web application. However, for
