@@ -23,11 +23,11 @@ def get_trigger_pattern(name, trigger):
 def get_root_name(name):
     if name == "home":
         return "vulnpy-root"
-    return name
+    return "vulnpy-{}".format(name)
 
 
 def get_trigger_name(name, trigger):
-    return "{}-{}".format(name, trigger)
+    return "vulnpy-{}-{}".format(name, trigger)
 
 
 def gen_root_view(name):
