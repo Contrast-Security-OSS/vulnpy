@@ -1,6 +1,6 @@
 import sqlite3
 
-db_connection = sqlite3.connect(":memory:")
+db_connection = sqlite3.connect(":memory:", check_same_thread=False)
 SELECT_ALL = "SELECT * FROM Character"
 
 
