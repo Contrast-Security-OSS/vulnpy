@@ -8,6 +8,10 @@ app = Flask(__name__)
 app.register_blueprint(vulnerable_blueprint)
 
 
+app.config["SESSION_COOKIE_SECURE"] = False
+app.config["SESSION_COOKIE_HTTPONLY"] = False
+
+
 @app.route("/")
 def index():
     return redirect("/vulnpy/")
