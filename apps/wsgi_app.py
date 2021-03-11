@@ -23,9 +23,7 @@ def rerouter_middleware(app):
 def make_app():
     app = rerouter_middleware(vulnerable_app)
     if os.environ.get("VULNPY_USE_CONTRAST"):
-        from contrast.agent.middlewares.wsgi_middleware import (
-            WSGIMiddleware as ContrastMiddleware,
-        )
+        from contrast.wsgi import ContrastMiddleware
 
         app = ContrastMiddleware(app)
 
