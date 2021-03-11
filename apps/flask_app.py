@@ -18,8 +18,6 @@ def index():
 
 
 if os.environ.get("VULNPY_USE_CONTRAST"):
-    from contrast.agent.middlewares.flask_middleware import (
-        FlaskMiddleware as ContrastMiddleware,
-    )
+    from contrast.flask import ContrastMiddleware
 
     app.wsgi_app = ContrastMiddleware(app)

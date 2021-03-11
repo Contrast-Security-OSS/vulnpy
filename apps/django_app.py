@@ -28,6 +28,7 @@ if __name__ == "__main__":
     }
 
     if os.environ.get("VULNPY_USE_CONTRAST"):
+        # TODO: be able to import as "contrast.django.ContrastMiddleware"
         if django.VERSION < (1, 10):
             middleware_setting_name = "MIDDLEWARE_CLASSES"
             contrast_middleware_name = (

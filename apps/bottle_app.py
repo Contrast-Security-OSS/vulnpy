@@ -1,3 +1,4 @@
+import os
 import sys
 from bottle import Bottle, run, redirect
 from vulnpy.bottle import add_vulnerable_routes
@@ -24,5 +25,10 @@ class StripPathMiddleware(object):
 if __name__ == "__main__":
     host = sys.argv[1] if len(sys.argv) > 1 else "localhost"
     port = int(sys.argv[2]) if len(sys.argv) > 2 else 8000
+
+    if os.environ.get("VULNPY_USE_CONTRAST"):
+        from contrast.bottle import ContrastMiddleware
+
+        app = ContrastMiddleware(app)
 
     run(app=StripPathMiddleware(app), host=host, port=port)
