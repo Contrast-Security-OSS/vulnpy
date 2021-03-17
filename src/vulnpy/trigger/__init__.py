@@ -10,6 +10,7 @@ DATA = {
     "cmdi": "echo attack",
     "deserialization": "csubprocess\ncheck_output\n(S'ls'\ntR.",
     "hash": "hashme",
+    "parameter_pollution": "",
     "pt": "../../etc/passwd",
     "rand": "seed",
     "redos": "anything",  # user input can be anything. The regex to be compared
