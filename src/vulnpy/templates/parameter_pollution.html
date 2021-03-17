@@ -36,51 +36,12 @@
       <br>
       <div class="column container">
         <!-- ###vulnpy-injection-site### - do not modify this line; it's in a regex -->
-<h1>Path Traversal: io.open</h1>
+<h1>Parameter Pollution</h1>
+# The relevant details are that there is no "action" attribute on the form, and
+# autocomplete is enabled.
 
-<form action="/vulnpy/pt/io-open/" method="get">
-  <div class="field has-addons">
-    <div class="control">
-      <input class="input" type="text" name="user_input" placeholder="../../etc/passwd">
-    </div>
-    <div class="control">
-      <button class="button is-info" action="submit">
-        Execute
-      </button>
-    </div>
-  </div>
-</form>
-<br>
-
-<h1>Path Traversal: open</h1>
-
-<form action="/vulnpy/pt/open/" method="get">
-  <div class="field has-addons">
-    <div class="control">
-      <input class="input" type="text" name="user_input" placeholder="../../etc/passwd">
-    </div>
-    <div class="control">
-      <button class="button is-info" action="submit">
-        Execute
-      </button>
-    </div>
-  </div>
-</form>
-<br>
-
-<h1>Path Traversal: execfile (Python 2 only)</h1>
-
-<form action="/vulnpy/pt/execfile/" method="get">
-  <div class="field has-addons">
-    <div class="control">
-      <input class="input" type="text" name="user_input" placeholder="../../etc/passwd">
-    </div>
-    <div class="control">
-      <button class="button is-info" action="submit">
-        Execute
-      </button>
-    </div>
-  </div>
+<form name="Polluted Form" method="POST" autocomplete="on">
+    <input type="text" name="foo" label="bar"/>
 </form>
         <!-- post-injection site -->
       </div>
