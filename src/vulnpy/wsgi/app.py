@@ -29,7 +29,14 @@ def vulnerable_app(environ, start_response):
             response.append("<p>XSS: {}</p>".format(user_input))
 
     response.append(get_template("{}.html".format(name)))
-    start_response("200 OK", [("Content-Type", "text/html")])
+    headers = [("Content-Type", "text/html")]
+
+    # This makes the app vulnerable to cache control missing, since both no-cache and
+    # no-store are missing
+    headers.append(("Cache-Control", "public"))
+
+    start_response("200 OK", headers)
+
     return [six.ensure_binary(s) for s in response]
 
 
