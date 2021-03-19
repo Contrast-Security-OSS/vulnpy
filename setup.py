@@ -11,7 +11,7 @@ except IOError:
 # NOTE: a typical webserver is included with framework dependencies if necessary
 trigger_extras = {"PyYAML>=5.1", "lxml>=4.3.1", "mock==3.*"}
 django_extras = {"Django"} | trigger_extras
-falcon_extras = {"falcon", "gunicorn"} | trigger_extras
+falcon_extras = {"falcon", "gunicorn", "uwsgi"} | trigger_extras
 flask_extras = {"Flask"} | trigger_extras
 pyramid_extras = {"pyramid", "waitress"} | trigger_extras
 wsgi_extras = trigger_extras
