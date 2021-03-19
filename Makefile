@@ -12,6 +12,9 @@ flask: templates
 falcon: templates
 	gunicorn -b $(HOST):$(PORT) apps.falcon_app:app
 
+falcon-uwsgi: templates
+	uwsgi -w apps.falcon_app:app --enable-threads --single-interpreter --http $(HOST):$(PORT)
+
 pyramid: templates
 	python apps/pyramid_app.py $(HOST):$(PORT)
 
@@ -23,3 +26,4 @@ wsgi: templates
 
 bottle: templates
 	python apps/bottle_app.py $(HOST) $(PORT)
+
