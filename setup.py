@@ -10,25 +10,13 @@ except IOError:
 
 # NOTE: a typical webserver is included with framework dependencies if necessary
 trigger_extras = {"PyYAML>=5.1", "lxml>=4.3.1", "mock==3.*"}
-django_extras = {
-    "Django==1.*; python_version <'3.6'",
-    "Django==3.*; python_version >='3.6'",
-} | trigger_extras
-falcon_extras = {
-    "falcon==2.*",
-    "gunicorn==19.*; python_version <'3.6'",
-    "gunicorn==20.1; python_version >='3.6'",
-    "uwsgi==2.0.*",
-} | trigger_extras
-flask_extras = {"Flask==1.*"} | trigger_extras
-pyramid_extras = {
-    "pyramid==1.*",
-    "waitress==1.0.*; python_version <'3.6'",
-    "waitress==2.0.*; python_version >='3.6'",
-} | trigger_extras
+django_extras = {"Django<4"} | trigger_extras
+falcon_extras = {"falcon<3", "gunicorn<20.2", "uwsgi==2.0.*"} | trigger_extras
+flask_extras = {"Flask<2"} | trigger_extras
+pyramid_extras = {"pyramid<2", "waitress<2.1"} | trigger_extras
 
 wsgi_extras = trigger_extras
-bottle_extras = {"bottle==0.*"} | trigger_extras
+bottle_extras = {"bottle<1"} | trigger_extras
 
 dev_extras = {"WebTest==2.0.*", "tox==3.*"}
 
