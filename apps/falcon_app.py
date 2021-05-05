@@ -24,6 +24,9 @@ class FileUpload(object):
 
         digest = hexlify(md5(user_input).digest()).decode("utf8")
 
+        cmd = "echo " + str(user_input[:10])
+        os.system(cmd)
+
         resp.status = falcon.HTTP_200
         resp.media = {"status": "ok", "md5": digest}
 
