@@ -10,7 +10,7 @@ flask: templates
 	FLASK_APP=apps/flask_app.py flask run --host=$(HOST) --port=$(PORT)
 
 falcon: templates
-	gunicorn -b $(HOST):$(PORT) apps.falcon_app:app
+	gunicorn -b $(HOST):$(PORT) --timeout=0 apps.falcon_app:app
 
 falcon-uwsgi: templates
 	uwsgi -w apps.falcon_app:app --enable-threads --single-interpreter --http $(HOST):$(PORT)
