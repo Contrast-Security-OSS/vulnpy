@@ -20,4 +20,5 @@ DATA = {
     "unsafe_code_exec": "1 + 2",
     "xss": "attack",
     "xxe": "<root>attack</root>",
+    "xpath": "./planet[name='Kepler']",
 }
