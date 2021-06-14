@@ -17,7 +17,7 @@ falcon_extras = {
     "uwsgi==2.0.*",
     "falcon-multipart==0.2.0",
 } | trigger_extras
-flask_extras = {"Flask<2"} | trigger_extras
+flask_extras = {"Flask<3"} | trigger_extras
 pyramid_extras = {"pyramid<2", "waitress<2.1"} | trigger_extras
 
 wsgi_extras = trigger_extras
