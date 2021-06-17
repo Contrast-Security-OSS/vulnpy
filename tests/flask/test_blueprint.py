@@ -39,3 +39,11 @@ def test_trigger(client, request_method, view_name, trigger_name):
 
     if view_name == "xss":
         assert "<p>XSS: {}</p>".format(data) in str(response.get_data())
+
+
+def test_trigger_header_source(client):
+    data = DATA["cmdi"]
+
+    response = client.get("/vulnpy/cmdi/os-system", headers={"user_input": data})
+
+    assert response.status_code == 200

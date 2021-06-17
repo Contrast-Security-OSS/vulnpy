@@ -7,6 +7,9 @@ vulnerable_blueprint = Blueprint("vulnpy", __name__, url_prefix="/vulnpy")
 
 
 def _get_user_input():
+    if request.headers.get("User-Input") is not None:
+        return request.headers.get("User-Input")
+
     if request.method == "GET":
         return request.args.get("user_input", "")
     return request.form.get("user_input", "")
