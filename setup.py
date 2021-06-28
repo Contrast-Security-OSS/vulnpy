@@ -12,7 +12,7 @@ except IOError:
 trigger_extras = {"PyYAML>=5.1", "lxml>=4.3.1", "mock==3.*"}
 django_extras = {"Django<4"} | trigger_extras
 falcon_extras = {
-    "falcon<3",
+    "falcon<4",
     "gunicorn<20.2",
     "uwsgi==2.0.*",
     "falcon-multipart==0.2.0",
