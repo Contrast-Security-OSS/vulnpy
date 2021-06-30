@@ -1,6 +1,7 @@
 import mock
 import pytest
 import falcon
+from vulnpy.vendor.six.moves.urllib_parse import quote
 
 from falcon import testing
 
@@ -30,6 +31,9 @@ def test_trigger(client, request_method, view_name, trigger_name):
     get_or_post = getattr(client, request_method)
 
     data = DATA[view_name]
+
+    # to make unsafe_code_exec trigger work
+    data = quote(data)
 
     response = get_or_post(
         "/vulnpy/{}/{}".format(view_name, trigger_name), params={"user_input": data},

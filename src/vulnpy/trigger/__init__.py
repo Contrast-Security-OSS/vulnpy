@@ -17,7 +17,7 @@ DATA = {
     # against the REDOS regex may be be hardcoded.
     "sqli": "d', '4'),('e",
     "ssrf": "attacker.com",
-    "unsafe_code_exec": "1 - 2",
+    "unsafe_code_exec": "1 + 2",
     "xss": "attack",
     "xxe": "<root>attack</root>",
     "xpath": "./planet[name='Kepler']",
