@@ -38,12 +38,12 @@
       <br>
       <div class="column container">
         <!-- ###vulnpy-injection-site### - do not modify this line; it's in a regex -->
-<h1>XXE: lxml.etree.fromstring</h1>
+<h1>nosqli: pymongo.collection.find</h1>
 
-<form action="/vulnpy/xxe/lxml-etree-fromstring/" method="get">
+<form action="/vulnpy/nosqli/mongo-find/" method="POST">
   <div class="field has-addons">
     <div class="control">
-      <input class="input" type="text" name="user_input" placeholder="<root>attack</root>">
+      <input class="input" type="text" name="user_input" id="user_input" placeholder='{"title": "Record One", "content": "some content", "author": "John Doe"}'>
     </div>
     <div class="control">
       <button class="button is-info" action="submit">
@@ -54,12 +54,13 @@
 </form>
 <br>
 
-<h1>XXE: xml.dom.pulldom.parseString</h1>
+<h1>nosqli: pymongo.collection.insert_one</h1>
 
-<form action="/vulnpy/xxe/xml-dom-pulldom-parsestring/" method="get">
+
+<form action="/vulnpy/nosqli/mongo-insert-one/" method="POST">
   <div class="field has-addons">
     <div class="control">
-      <input class="input" type="text" name="user_input" placeholder="<root>attack</root>">
+      <input class="input" type="text" name="user_input" placeholder='{"title": "Record One", "content": "some content", "author": "John Doe"}'>
     </div>
     <div class="control">
       <button class="button is-info" action="submit">
@@ -70,12 +71,13 @@
 </form>
 <br>
 
-<h1>XXE: xml.sax.parseString</h1>
+<h1>nosqli: pymongo.collection.insert_many</h1>
 
-<form action="/vulnpy/xxe/xml-sax-parsestring/" method="get">
+
+<form action="/vulnpy/nosqli/mongo-insert-many/" method="POST">
   <div class="field has-addons">
     <div class="control">
-      <input class="input" type="text" name="user_input" placeholder="<root>attack</root>">
+      <input class="input" type="text" name="user_input" placeholder='{"title": "Record One", "content": "some content", "author": "John Doe"}'>
     </div>
     <div class="control">
       <button class="button is-info" action="submit">
@@ -85,6 +87,43 @@
   </div>
 </form>
 <br>
+
+<h1>nosqli: pymongo.collection._update_retryable</h1>
+
+
+<form action="/vulnpy/nosqli/mongo-update/" method="POST">
+  <div class="field has-addons">
+    <div class="control">
+      <input class="input" type="text" name="user_input" placeholder='{"title": "Record One", "content": "some content", "author": "John Doe"}'>
+    </div>
+
+    <div class="control">
+      <button class="button is-info" action="submit">
+        Execute
+      </button>
+    </div>
+  </div>
+</form>
+<br>
+
+
+<h1>nosqli: pymongo.collection._delete_retryable</h1>
+
+
+<form action="/vulnpy/nosqli/mongo-delete/" method="POST">
+  <div class="field has-addons">
+    <div class="control">
+      <input class="input" type="text" name="user_input" placeholder='{"title": "Record One", "content": "some content", "author": "John Doe"}'>
+    </div>
+    <div class="control">
+      <button class="button is-info" action="submit">
+        Execute
+      </button>
+    </div>
+  </div>
+</form>
+<br>
+
         <!-- post-injection site -->
       </div>
     </div>
