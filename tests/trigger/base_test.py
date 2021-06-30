@@ -1,5 +1,7 @@
 import pytest
 
+import operator
+
 
 class BaseTriggerTest(object):
     @property
@@ -25,7 +27,12 @@ class BaseTriggerTest(object):
         return TypeError
 
     def test_good_input(self):
-        assert self.trigger_func(self.good_input[0]) == self.good_input[1]
+        result = self.trigger_func(self.good_input[0])
+        expected = self.good_input[1]
+        compare = operator.eq
+        if len(self.good_input) == 3:
+            compare = self.good_input[2]
+        assert compare(result, expected)
 
     def test_exception(self):
         with pytest.raises(self.exception_raised):
