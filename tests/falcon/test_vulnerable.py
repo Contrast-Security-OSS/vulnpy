@@ -33,7 +33,7 @@ def test_trigger(client, request_method, view_name, trigger_name):
     data = DATA[view_name]
 
     # to make unsafe_code_exec trigger work
-    data = quote(data)
+    data = quote(data) if view_name != "nosqli" else data
 
     response = get_or_post(
         "/vulnpy/{}/{}".format(view_name, trigger_name), params={"user_input": data},

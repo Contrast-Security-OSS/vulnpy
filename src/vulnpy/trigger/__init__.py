@@ -21,4 +21,5 @@ DATA = {
     "xss": "attack",
     "xxe": "<root>attack</root>",
     "xpath": "./planet[name='Kepler']",
+    "nosqli": {"title": "Record One", "content": "some content", "author": "John Doe"},
 }

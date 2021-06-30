@@ -31,6 +31,14 @@ jobs:
       - black
       - flake8
     runs-on: ubuntu-18.04
+    services:
+      mongodb:
+        image: mongo
+        ports:
+          - 27017:27017
+    env:
+      # The hostname needs to match the label given to the service above
+      MONGODB_HOST: mongodb:27017
     strategy:
       matrix:
         python-version: [2.7, 3.5, 3.6, 3.7, 3.8]
