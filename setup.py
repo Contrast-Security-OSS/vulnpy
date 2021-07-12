@@ -9,7 +9,7 @@ except IOError:
     README = ""
 
 # NOTE: a typical webserver is included with framework dependencies if necessary
-trigger_extras = {"PyYAML>=5.1", "lxml>=4.3.1", "mock==3.*", "pymongo==3.11.*"}
+trigger_extras = {"PyYAML>=5.1", "lxml>=4.3.1", "mock==3.*"}
 django_extras = {"Django<4"} | trigger_extras
 falcon_extras = {
     "falcon<4",
