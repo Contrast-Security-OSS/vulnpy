@@ -2,21 +2,19 @@ from pymongo import MongoClient
 import os
 
 
-mongo_host = [os.environ.get("MONGODB_HOST", "localhost:27017")]
-
-
 def mongo_db_exists():
-    test_client = MongoClient(host=mongo_host, serverSelectionTimeoutMS=20)
-    test_db = test_client.pymongo_test
+    client = MongoClient(serverSelectionTimeoutMS=20)
+    db = client.pymongo_test
 
     try:
-        test_db.posts.count_documents({})
+        db.posts.count_documents({})
     except Exception:  # pragma: no cover
         return False
     return True
 
 
 def create_mongo_client(**kwargs):
+    mongo_host = [os.environ.get("MONGODB_HOST", "localhost:27017")]
     if mongo_db_exists():
         return MongoClient(host=mongo_host, **kwargs)
     else:
