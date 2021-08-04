@@ -24,6 +24,9 @@ django: templates
 wsgi: templates
 	python apps/wsgi_app.py $(HOST) $(PORT)
 
+wsgi-two-apps: templates
+	python apps/wsgi_two_apps.py $(HOST) $(PORT)
+
 bottle: templates
 	python apps/bottle_app.py $(HOST) $(PORT)
 
