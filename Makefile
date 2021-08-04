@@ -9,6 +9,9 @@ templates:
 flask: templates
 	FLASK_APP=apps/flask_app.py flask run --host=$(HOST) --port=$(PORT)
 
+flask-two-apps: templates
+	FLASK_APP=apps/flask_two_apps.py:combined_app flask run --host=$(HOST) --port=$(PORT)
+
 falcon: templates
 	gunicorn -b $(HOST):$(PORT) --timeout=0 apps.falcon_app:app
 
