@@ -15,8 +15,8 @@ flask-two-apps: templates
 falcon: templates
 	gunicorn -b $(HOST):$(PORT) --timeout=0 apps.falcon_app:app
 
-falcon-uwsgi: templates
-	uwsgi -w apps.falcon_app:app --enable-threads --single-interpreter --http $(HOST):$(PORT)
+flask-uwsgi: templates
+	uwsgi -w apps.flask_app:app --enable-threads --single-interpreter --http $(HOST):$(PORT)
 
 pyramid: templates
 	python apps/pyramid_app.py $(HOST):$(PORT)
@@ -32,4 +32,3 @@ wsgi-two-apps: templates
 
 bottle: templates
 	python apps/bottle_app.py $(HOST) $(PORT)
-

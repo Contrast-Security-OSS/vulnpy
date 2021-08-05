@@ -14,10 +14,10 @@ django_extras = {"Django<4"} | trigger_extras
 falcon_extras = {
     "falcon<4",
     "gunicorn<20.2",
-    "uwsgi==2.0.*",
     "falcon-multipart==0.2.0",
 } | trigger_extras
 flask_extras = {"Flask<3"} | trigger_extras
+uwsgi_extras = {"uwsgi==2.0.*"} | flask_extras
 pyramid_extras = {"pyramid<2", "waitress<2.1"} | trigger_extras
 
 wsgi_extras = trigger_extras
@@ -34,6 +34,7 @@ all_extras = (
     | wsgi_extras
     | dev_extras
     | bottle_extras
+    | uwsgi_extras
 )
 
 setup(
@@ -73,5 +74,6 @@ setup(
         "bottle": bottle_extras,
         "wsgi": wsgi_extras,
         "trigger": trigger_extras,
+        "uwsgi": uwsgi_extras,
     },
 )
