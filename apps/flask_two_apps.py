@@ -18,13 +18,11 @@ app2.register_blueprint(vulnerable_blueprint)
 
 @app1.route("/")
 def frontend():
-    breakpoint()
     return redirect("/vulnpy/")
 
 
-@app1.route("/backend")  # maybe this was supposed to be app2?
+@app2.route("/backend")
 def backend():
-    breakpoint()
     return redirect("/vulnpy/")
 
 
