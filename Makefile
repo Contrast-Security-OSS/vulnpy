@@ -12,6 +12,7 @@ flask: templates
 flask-two-apps: templates
 	FLASK_APP=apps/flask_two_apps.py:combined_app flask run --host=$(HOST) --port=$(PORT)
 
+# note: vulnpy's routing strategy for falcon is quite nonstandard
 falcon: templates
 	gunicorn -b $(HOST):$(PORT) --timeout=0 apps.falcon_app:app
 
