@@ -33,3 +33,10 @@ wsgi-two-apps: templates
 
 bottle: templates
 	python apps/bottle_app.py $(HOST) $(PORT)
+
+# why does this not work?
+fastapi: templates
+    uvicorn apps.fastapi_app:app
+
+fastapi-async: templates
+    uvicorn apps.fastapi_app_async:app
