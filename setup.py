@@ -17,6 +17,7 @@ falcon_extras = {
     "falcon-multipart==0.2.0",
 } | trigger_extras
 flask_extras = {"Flask<3"} | trigger_extras
+fastapi_extrast = {"fastapi==0.68.0", "uvicorn[standard]"} | trigger_extras
 uwsgi_extras = {"uwsgi==2.0.*"} | flask_extras
 pyramid_extras = {"pyramid<2", "waitress<2.1"} | trigger_extras
 
@@ -35,6 +36,7 @@ all_extras = (
     | dev_extras
     | bottle_extras
     | uwsgi_extras
+    | fastapi_extrast
 )
 
 setup(
@@ -70,6 +72,7 @@ setup(
         "django": django_extras,
         "falcon": falcon_extras,
         "flask": flask_extras,
+        "fastapi": fastapi_extrast,
         "pyramid": pyramid_extras,
         "bottle": bottle_extras,
         "wsgi": wsgi_extras,
