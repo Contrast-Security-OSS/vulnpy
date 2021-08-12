@@ -63,6 +63,6 @@ def do_open(user_input):
 def do_execfile(user_input):
     """only exists in PY2"""
     try:
-        execfile(user_input)
+        execfile(user_input)  # noqa: F821
     except Exception:
         pass

@@ -17,7 +17,10 @@ falcon_extras = {
     "falcon-multipart==0.2.0",
 } | trigger_extras
 flask_extras = {"Flask<3"} | trigger_extras
-fastapi_extras = {"fastapi==0.68.0", "uvicorn[standard]"} | trigger_extras
+fastapi_extras = {
+    "fastapi==0.68.0; python_version >= '3.6'",
+    "uvicorn[standard]; python_version >= '3.6'",
+} | trigger_extras
 uwsgi_extras = {"uwsgi==2.0.*"} | flask_extras
 pyramid_extras = {"pyramid<2", "waitress<2.1"} | trigger_extras
 

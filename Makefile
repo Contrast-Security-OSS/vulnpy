@@ -37,6 +37,3 @@ bottle: templates
 # why does this not work?
 fastapi: templates
     uvicorn apps.fastapi_app:app
-
-fastapi-async: templates
-    uvicorn apps.fastapi_app_async:app
