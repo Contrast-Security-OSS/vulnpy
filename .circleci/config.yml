@@ -39,4 +39,8 @@ jobs:
           command: pip install tox
       - run:
           name: Run tests
-          command: tox -e pytest
+          command: |
+            mkdir test-results
+            tox -e pytest
+      - store_test_results:
+          path: test-results
