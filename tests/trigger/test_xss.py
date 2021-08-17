@@ -12,7 +12,4 @@ class TestRawXss(BaseTriggerTest):
         return "", ""
 
     def test_exception(self):
-        import sys
-
-        if sys.version_info[:2] == (3, 8):
-            raise ValueError("Testing for CircleCI!")
+        pass
