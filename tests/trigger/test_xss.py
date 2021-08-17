@@ -12,4 +12,4 @@ class TestRawXss(BaseTriggerTest):
         return "", ""
 
     def test_exception(self):
-        pass
+        raise ValueError("Testing for CircleCI!")
