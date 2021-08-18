@@ -31,6 +31,7 @@ pyramid-uwsgi: templates
 django: templates
 	python apps/django_app.py runserver $(HOST):$(PORT)
 
+# #TODO: PYT-1697
 # django-uwsgi: templates
 	#uwsgi -w apps.django_app ...
 
