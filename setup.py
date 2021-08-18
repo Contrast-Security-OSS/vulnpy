@@ -21,7 +21,7 @@ fastapi_extras = {
     "fastapi==0.68.0; python_version >= '3.6'",
     "uvicorn[standard]; python_version >= '3.6'",
 } | trigger_extras
-uwsgi_extras = {"uwsgi==2.0.*"} | flask_extras
+uwsgi_extras = {"uwsgi==2.0.*"}
 pyramid_extras = {"pyramid<2", "waitress<2.1"} | trigger_extras
 
 wsgi_extras = trigger_extras

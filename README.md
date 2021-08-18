@@ -138,6 +138,12 @@ endpoints.
 To run with Contrast, install the agent (`pip install -U contrast-agent`) and set
 `VULNPY_USE_CONTRAST=true` before running your desired `make` command.
 
+#### Running Different Servers
+
+While some frameworks come with their own servers, you can use the uWSGI server as 
+well. `pip install -e ".[flask,uwsgi]" && make flask-uwsgi` launches the flask app 
+with uWSGI.
+
 #### Running with Contrast in Docker
 
 `vulnpy` provides a Dockerfile that is also preconfigured to enable Contrast Security's
