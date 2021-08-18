@@ -30,11 +30,11 @@ def make_app():
     return app
 
 
+app = make_app()
+
 if __name__ == "__main__":
     host = sys.argv[1] if len(sys.argv) > 1 else "localhost"
     port = int(sys.argv[2]) if len(sys.argv) > 2 else 8000
-
-    app = make_app()
 
     httpd = make_server(host, port, app)
     print("WSGI app starting on http://{}:{}".format(host, port))
