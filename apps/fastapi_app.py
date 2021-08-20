@@ -4,13 +4,16 @@ from typing import Optional
 from fastapi import FastAPI
 from time import sleep
 from asyncio import sleep as async_sleep
+from vulnpy.fastapi import vulnerable_routes
 
 app = FastAPI()
+app.include_router(vulnerable_routes)
 
-if os.environ.get("VULNPY_USE_CONTRAST"):
-    from contrast.fastapi import ContrastMiddleware
-
-    app.middleware("http")(ContrastMiddleware(app))
+# TODO: PYT-1701
+# if os.environ.get("VULNPY_USE_CONTRAST"):
+#     from contrast.fastapi import ContrastMiddleware
+#
+#     app.middleware("http")(ContrastMiddleware(app))
 
 
 @app.get("/")
