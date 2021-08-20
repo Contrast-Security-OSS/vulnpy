@@ -50,6 +50,5 @@ bottle: templates
 bottle-uwsgi: templates
 	uwsgi -w apps.bottle_app:app --enable-threads --single-interpreter --http $(HOST):$(PORT)
 
-# why does this not work?
 fastapi: templates
-    uvicorn apps.fastapi_app:app
+	uvicorn apps.fastapi_app:app
