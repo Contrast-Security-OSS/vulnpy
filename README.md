@@ -116,6 +116,25 @@ app = Bottle()
 add_vulnerable_routes(app)
 ```
 
+### FastAPI
+
+Install vulnpy with fastapi extensions:
+
+```
+pip install 'git+git://github.com/Contrast-Security-OSS/vulnpy#egg=vulnpy[fastapi]'
+```
+
+Use the `include_router` function to register vulnpy's router with your `fastapi`
+application:
+
+```py
+from fastapi import FastAPI
+from vulnpy.fastapi import vulnerable_routes
+
+app = FastAPI()
+app.include_router(vulnerable_routes)
+```
+
 ### Sample Servers
 
 `vulnpy` is intended to extend the functionality of an existing web application. However, for
