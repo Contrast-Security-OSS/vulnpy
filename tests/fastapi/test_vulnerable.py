@@ -34,9 +34,9 @@ def test_trigger(client, view_name, trigger_name):
         data = "'{}'".format(data)
 
     response = client.get(
-        "/vulnpy/{}/{}/?user_input={}".format(view_name, trigger_name, data),
-        data={"user_input": data},
+        "/vulnpy/{}/{}/".format(view_name, trigger_name), params={"user_input": data}
     )
+
     assert response.status_code == 200
 
     if view_name == "xss":

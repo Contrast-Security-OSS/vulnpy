@@ -1,10 +1,12 @@
 from fastapi import APIRouter
+from fastapi.responses import HTMLResponse
+
 from vulnpy.common import get_template
 
 from vulnpy.trigger import TRIGGER_MAP, get_trigger
 
 
-router = router = APIRouter(prefix="/vulnpy",)
+router = APIRouter(prefix="/vulnpy",)
 
 
 def get_root_name(name):
@@ -22,7 +24,7 @@ def gen_root_view(name):
 
     @router.get(view_name)
     def _view():
-        return get_template("{}.html".format(name))
+        return HTMLResponse(get_template("{}.html".format(name)))
 
 
 def get_trigger_view(name, trigger):
@@ -40,7 +42,7 @@ def get_trigger_view(name, trigger):
         if name == "xss" and trigger == "raw":
             template += "<p>XSS: " + user_input + "</p>"
 
-        return template
+        return HTMLResponse(template)
 
 
 def generate_root_urls():
