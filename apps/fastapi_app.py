@@ -2,6 +2,7 @@ import os
 from typing import Optional
 
 from fastapi import FastAPI
+from fastapi.responses import RedirectResponse
 from time import sleep
 from asyncio import sleep as async_sleep
 from vulnpy.fastapi import vulnerable_routes
@@ -18,7 +19,7 @@ app.include_router(vulnerable_routes)
 
 @app.get("/")
 def read_root():
-    return {"Hello": "World"}
+    return RedirectResponse("/vulnpy")
 
 
 @app.get("/items/{item_id}")
