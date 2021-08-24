@@ -51,4 +51,4 @@ bottle-uwsgi: templates
 	uwsgi -w apps.bottle_app:app --enable-threads --single-interpreter --http $(HOST):$(PORT)
 
 fastapi: templates
-	uvicorn apps.fastapi_app:app
+	uvicorn apps.fastapi_app:app --host=$(HOST) --port=$(PORT)

@@ -10,11 +10,10 @@ from vulnpy.fastapi import vulnerable_routes
 app = FastAPI()
 app.include_router(vulnerable_routes)
 
-# TODO: PYT-1701
-# if os.environ.get("VULNPY_USE_CONTRAST"):
-#     from contrast.fastapi import ContrastMiddleware
-#
-#     app.middleware("http")(ContrastMiddleware(app))
+if os.environ.get("VULNPY_USE_CONTRAST"):
+    from contrast.fastapi import ContrastMiddleware
+
+    app.add_middleware(ContrastMiddleware, original_app=app)
 
 
 @app.get("/")
