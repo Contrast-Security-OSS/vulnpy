@@ -23,7 +23,7 @@ def gen_root_view(name):
     view_name = get_root_name(name)
 
     @router.get(view_name)
-    def _view():
+    async def _view():
         return HTMLResponse(get_template("{}.html".format(name)))
 
 
@@ -31,7 +31,7 @@ def get_trigger_view(name, trigger):
     view_name = get_trigger_name(name, trigger)
 
     @router.get(view_name)
-    def _view(user_input: str):
+    async def _view(user_input: str):
         trigger_func = get_trigger(name, trigger)
 
         if trigger_func:
