@@ -11,16 +11,16 @@ except IOError:
 # NOTE: a typical webserver is included with framework dependencies if necessary
 trigger_extras = {"PyYAML>=5.1", "lxml>=4.3.1", "mock==3.*"}
 django_extras = {"Django<4"} | trigger_extras
-falcon_extras = {
-    "falcon<4",
-    "gunicorn<20.2",
-    "falcon-multipart==0.2.0",
-} | trigger_extras
+falcon_extras = {"falcon<4", "falcon-multipart==0.2.0"} | trigger_extras
 flask_extras = {"Flask<3"} | trigger_extras
 fastapi_extras = {
     "fastapi==0.68.0; python_version >= '3.6'",
     "uvicorn[standard]; python_version >= '3.6'",
 } | trigger_extras
+gunicorn_extras = {
+    "gunicorn<20.1; python_version < '3.6'",
+    "gunicorn==20.1.*; python_version >= '3.6'",
+}
 uwsgi_extras = {"uwsgi==2.0.*"}
 pyramid_extras = {"pyramid<2", "waitress<2.1"} | trigger_extras
 
@@ -40,6 +40,7 @@ all_extras = (
     | bottle_extras
     | uwsgi_extras
     | fastapi_extras
+    | gunicorn_extras
 )
 
 setup(
@@ -81,5 +82,6 @@ setup(
         "wsgi": wsgi_extras,
         "trigger": trigger_extras,
         "uwsgi": uwsgi_extras,
+        "gunicorn": gunicorn_extras,
     },
 )
