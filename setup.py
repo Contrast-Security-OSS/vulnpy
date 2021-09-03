@@ -64,7 +64,7 @@ setup(
     ],
     keywords="security testing",
     author="Contrast Security, Inc.",
-    author_email="python@contrastsecurity.onmicrosoft.com",
+    author_email="python@contrastsecurity.com",
     url="https://github.com/Contrast-Security-OSS/vulnpy",
     license="MIT",
     include_package_data=True,
