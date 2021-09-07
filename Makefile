@@ -1,5 +1,7 @@
 HOST ?= localhost
 PORT ?= 8000
+UWSGI_OPTIONS := --enable-threads --single-interpreter --http $(HOST):$(PORT)
+GUNICORN_OPTIONS := --timeout=0 -b $(HOST):$(PORT)
 
 export VULNPY_REAL_SSRF_REQUESTS = true
 
@@ -14,55 +16,55 @@ flask-two-apps: templates
 
 # note: vulnpy's routing strategy for falcon is quite nonstandard
 falcon: templates
-	gunicorn -b $(HOST):$(PORT) --timeout=0 apps.falcon_app:app
+	gunicorn $(GUNICORN_OPTIONS) apps.falcon_app:app
 
 falcon-uwsgi: templates
-	uwsgi -w apps.falcon_app:app --enable-threads --single-interpreter --http $(HOST):$(PORT)
+	uwsgi $(UWSGI_OPTIONS) -w apps.falcon_app:app
 
 flask-uwsgi: templates
-	uwsgi -w apps.flask_app:app --enable-threads --single-interpreter --http $(HOST):$(PORT)
+	uwsgi $(UWSGI_OPTIONS) -w apps.flask_app:app
 
 flask-gunicorn: templates
-	gunicorn -b $(HOST):$(PORT) --timeout=0 apps.flask_app:app
+	gunicorn $(GUNICORN_OPTIONS) apps.flask_app:app
 
 pyramid: templates
 	python apps/pyramid_app.py $(HOST):$(PORT)
 
 pyramid-uwsgi: templates
-	uwsgi -w apps.pyramid_app:app --enable-threads --single-interpreter --http $(HOST):$(PORT)
+	uwsgi $(UWSGI_OPTIONS) -w apps.pyramid_app:app
 
 pyramid-gunicorn: templates
-	gunicorn -b $(HOST):$(PORT) --timeout=0 apps.pyramid_app:app
+	gunicorn $(GUNICORN_OPTIONS) apps.pyramid_app:app
 
 django: templates
-	python apps/django_app.py runserver $(HOST):$(PORT)
+	python apps/django_app.py runserver --noreload $(HOST):$(PORT)
 
-# #TODO: PYT-1697
-# django-uwsgi: templates
-	#uwsgi -w apps.django_app ...
-# django-gunicorn: templates
-#	gunicorn -b $(HOST):$(PORT) --timeout=0 apps.django_app:app
+django-uwsgi: templates
+	uwsgi $(UWSGI_OPTIONS) -w apps.django_app:application
+
+django-gunicorn: templates
+	gunicorn $(GUNICORN_OPTIONS) apps.django_app:application
 
 wsgi: templates
 	python apps/wsgi_app.py $(HOST) $(PORT)
 
 wsgi-uwsgi: templates
-	uwsgi -w apps.wsgi_app:app --enable-threads --single-interpreter --http $(HOST):$(PORT)
+	uwsgi $(UWSGI_OPTIONS) -w apps.wsgi_app:app
 
 wsgi-two-apps: templates
 	python apps/wsgi_two_apps.py $(HOST) $(PORT)
 
 wsgi-gunicorn: templates
-	gunicorn -b $(HOST):$(PORT) --timeout=0 apps.wsgi_app:app
+	gunicorn $(GUNICORN_OPTIONS) apps.wsgi_app:app
 
 bottle: templates
 	python apps/bottle_app.py $(HOST) $(PORT)
 
 bottle-uwsgi: templates
-	uwsgi -w apps.bottle_app:app --enable-threads --single-interpreter --http $(HOST):$(PORT)
+	uwsgi $(UWSGI_OPTIONS) -w apps.bottle_app:app
 
 bottle-gunicorn: templates
-	gunicorn -b $(HOST):$(PORT) --timeout=0 apps.bottle_app:app
+	gunicorn $(GUNICORN_OPTIONS) apps.bottle_app:app
 
 fastapi: templates
 	uvicorn apps.fastapi_app:app --host=$(HOST) --port=$(PORT)
