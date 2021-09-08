@@ -8,24 +8,27 @@ export VULNPY_REAL_SSRF_REQUESTS = true
 templates:
 	./scripts/gen_templates.sh
 
-flask: templates
-	FLASK_APP=apps/flask_app.py flask run --host=$(HOST) --port=$(PORT)
-
-flask-two-apps: templates
-	FLASK_APP=apps/flask_two_apps.py:combined_app flask run --host=$(HOST) --port=$(PORT)
-
-# note: vulnpy's routing strategy for falcon is quite nonstandard
-falcon: templates
-	gunicorn $(GUNICORN_OPTIONS) apps.falcon_app:app
+falcon: # falcon has no default server, so we use gunicorn
+	$(error Falcon requires a production webserver - try `make falcon-gunicorn`)
 
 falcon-uwsgi: templates
 	uwsgi $(UWSGI_OPTIONS) -w apps.falcon_app:app
+
+# note: vulnpy's routing strategy for falcon is quite nonstandard
+falcon-gunicorn: templates
+	gunicorn $(GUNICORN_OPTIONS) apps.falcon_app:app
+
+flask: templates
+	FLASK_APP=apps/flask_app.py flask run --host=$(HOST) --port=$(PORT)
 
 flask-uwsgi: templates
 	uwsgi $(UWSGI_OPTIONS) -w apps.flask_app:app
 
 flask-gunicorn: templates
 	gunicorn $(GUNICORN_OPTIONS) apps.flask_app:app
+
+flask-two-apps: templates
+	FLASK_APP=apps/flask_two_apps.py:combined_app flask run --host=$(HOST) --port=$(PORT)
 
 pyramid: templates
 	python apps/pyramid_app.py $(HOST):$(PORT)
@@ -51,11 +54,11 @@ wsgi: templates
 wsgi-uwsgi: templates
 	uwsgi $(UWSGI_OPTIONS) -w apps.wsgi_app:app
 
-wsgi-two-apps: templates
-	python apps/wsgi_two_apps.py $(HOST) $(PORT)
-
 wsgi-gunicorn: templates
 	gunicorn $(GUNICORN_OPTIONS) apps.wsgi_app:app
+
+wsgi-two-apps: templates
+	python apps/wsgi_two_apps.py $(HOST) $(PORT)
 
 bottle: templates
 	python apps/bottle_app.py $(HOST) $(PORT)

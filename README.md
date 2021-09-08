@@ -160,9 +160,13 @@ To run with Contrast, install the agent (`pip install -U contrast-agent`) and se
 #### Running Different Servers
 
 While some frameworks come with their own servers, you can use the uWSGI or 
-gunicorn servers as well. `pip install -e ".[flask,uwsgi]" && make flask-uwsgi` launches
-the flask app with uWSGI. `pip install -e ".[falcon,gunicorn]" && make falcon` will
-launch the falcon app with gunicorn.
+gunicorn servers as well.
+
+`pip install -e ".[flask,uwsgi-max]" && make flask-uwsgi`
+launches the flask app with the maximum supported uWSGI version.
+
+`pip install -e ".[falcon,gunicorn-min]" && make falcon-gunicorn`
+launches the falcon app with the minimum supported gunicorn version.
 
 #### Running with Contrast in Docker
 
