@@ -8,7 +8,6 @@ try:
 except IOError:
     README = ""
 
-# NOTE: a typical webserver is included with framework dependencies if necessary
 trigger_extras = {"PyYAML>=5.1", "lxml>=4.3.1", "mock==3.*"}
 django_extras = {"Django<4"} | trigger_extras
 falcon_extras = {"falcon<4", "falcon-multipart==0.2.0"} | trigger_extras
@@ -21,7 +20,8 @@ gunicorn_extras = {
     "gunicorn<20.1; python_version < '3.6'",
     "gunicorn==20.1.*; python_version >= '3.6'",
 }
-uwsgi_extras = {"uwsgi==2.0.*"}
+uwsgi_max_extras = {"uwsgi==2.0.*"}
+uwsgi_min_extras = {"uwsgi==2.0.14"}
 pyramid_extras = {"pyramid<2", "waitress<2.1"} | trigger_extras
 
 wsgi_extras = trigger_extras
@@ -38,7 +38,7 @@ all_extras = (
     | wsgi_extras
     | dev_extras
     | bottle_extras
-    | uwsgi_extras
+    | uwsgi_max_extras
     | fastapi_extras
     | gunicorn_extras
 )
@@ -81,7 +81,8 @@ setup(
         "bottle": bottle_extras,
         "wsgi": wsgi_extras,
         "trigger": trigger_extras,
-        "uwsgi": uwsgi_extras,
+        "uwsgi-max": uwsgi_max_extras,
+        "uwsgi-min": uwsgi_min_extras,
         "gunicorn": gunicorn_extras,
     },
 )
