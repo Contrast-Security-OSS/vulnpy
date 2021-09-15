@@ -16,12 +16,13 @@ fastapi_extras = {
     "fastapi==0.68.0; python_version >= '3.6'",
     "uvicorn[standard]; python_version >= '3.6'",
 } | trigger_extras
-gunicorn_extras = {
+gunicorn_max_extras = {
     "gunicorn<20.1; python_version < '3.6'",
     "gunicorn==20.1.*; python_version >= '3.6'",
 }
 uwsgi_max_extras = {"uwsgi==2.0.*"}
 uwsgi_min_extras = {"uwsgi==2.0.14"}
+gunicorn_min_extras = {"gunicorn==0.16.1"}
 pyramid_extras = {"pyramid<2", "waitress<2.1"} | trigger_extras
 
 wsgi_extras = trigger_extras
@@ -40,7 +41,7 @@ all_extras = (
     | bottle_extras
     | uwsgi_max_extras
     | fastapi_extras
-    | gunicorn_extras
+    | gunicorn_max_extras
 )
 
 setup(
@@ -83,6 +84,7 @@ setup(
         "trigger": trigger_extras,
         "uwsgi-max": uwsgi_max_extras,
         "uwsgi-min": uwsgi_min_extras,
-        "gunicorn": gunicorn_extras,
+        "gunicorn-max": gunicorn_max_extras,
+        "gunicorn-min": gunicorn_min_extras,
     },
 )
