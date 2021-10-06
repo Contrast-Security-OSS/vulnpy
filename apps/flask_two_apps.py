@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask, redirect
+from flask import Flask
 
 from vulnpy.flask.blueprint import vulnerable_blueprint
 from werkzeug.middleware.dispatcher import DispatcherMiddleware
@@ -18,12 +18,12 @@ app2.register_blueprint(vulnerable_blueprint)
 
 @app1.route("/")
 def frontend():
-    return redirect("/vulnpy/")
+    return "<p>Frontend app 1 </p>"
 
 
-@app2.route("/backend")
+@app2.route("/")
 def backend():
-    return redirect("/vulnpy/")
+    return "<p>Backend app 2 </p>"
 
 
 if os.environ.get("VULNPY_USE_CONTRAST"):
