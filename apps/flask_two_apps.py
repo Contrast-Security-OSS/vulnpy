@@ -29,7 +29,9 @@ def backend():
 if os.environ.get("VULNPY_USE_CONTRAST"):
     from contrast.flask import ContrastMiddleware
 
+    print("Dani: initializing first mdw")
     app1.wsgi_app = ContrastMiddleware(app1)
+    print("Dani: initializing second mdw")
     app2.wsgi_app = ContrastMiddleware(app2)
 
     primary_app.wsgi_app = DispatcherMiddleware(
