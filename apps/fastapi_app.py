@@ -35,8 +35,7 @@ async def read_file(content: bytes):
         cmd = "echo " + str(content[:10])
         os.system(cmd)
 
-        return {"content": "ok",
-                "md5": digest}
+        return {"content": "ok", "md5": digest}
 
     return "no content"
 
