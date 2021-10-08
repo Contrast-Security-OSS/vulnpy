@@ -3,7 +3,7 @@ from binascii import hexlify
 from hashlib import md5
 from typing import Optional
 
-from fastapi import FastAPI, File, UploadFile
+from fastapi import FastAPI, File
 from fastapi.responses import RedirectResponse
 from time import sleep
 from asyncio import sleep as async_sleep
