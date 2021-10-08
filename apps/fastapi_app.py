@@ -1,7 +1,9 @@
 import os
+from binascii import hexlify
+from hashlib import md5
 from typing import Optional
 
-from fastapi import FastAPI
+from fastapi import FastAPI, File, UploadFile
 from fastapi.responses import RedirectResponse
 from time import sleep
 from asyncio import sleep as async_sleep
@@ -24,6 +26,26 @@ def read_root():
 @app.get("/items/{item_id}")
 def read_item(item_id: int, q: Optional[str] = None):
     return {"item_id": item_id, "q": q}
+
+
+async def read_file(content: bytes):
+    if content:
+        digest = hexlify(md5(content).digest()).decode("utf8")
+
+        cmd = "echo " + str(content[:10])
+        os.system(cmd)
+
+        return {"content": "ok",
+                "md5": digest}
+
+    return "no content"
+
+
+@app.post("/files/upload")
+async def upload_return_large_file(file: bytes = File(...)):
+    # Used for test upload large file and reading from it
+
+    return {"content": await read_file(file)}
 
 
 @app.get("/cmdi")
