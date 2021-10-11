@@ -15,6 +15,7 @@ flask_extras = {"Flask<3"} | trigger_extras
 fastapi_extras = {
     "fastapi==0.68.0; python_version >= '3.6'",
     "uvicorn[standard]; python_version >= '3.6'",
+    "python-multipart==0.0.5",
 } | trigger_extras
 gunicorn_max_extras = {
     "gunicorn<20.1; python_version < '3.6'",
