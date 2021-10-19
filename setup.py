@@ -13,9 +13,9 @@ django_extras = {"Django<4"} | trigger_extras
 falcon_extras = {"falcon<4", "falcon-multipart==0.2.0"} | trigger_extras
 flask_extras = {"Flask<3"} | trigger_extras
 fastapi_extras = {
-    "fastapi==0.68.0; python_version >= '3.6'",
+    "fastapi<1; python_version >= '3.6'",
     "uvicorn[standard]; python_version >= '3.6'",
-    "python-multipart==0.0.5",
+    "python-multipart<1",
 } | trigger_extras
 gunicorn_max_extras = {
     "gunicorn<20.1; python_version < '3.6'",
