@@ -71,3 +71,6 @@ bottle-gunicorn: templates
 
 fastapi: templates
 	uvicorn apps.fastapi_app:app --host=$(HOST) --port=$(PORT)
+
+aiohttp: templates
+	python -m aiohttp.web -H $(HOST) -P $(PORT) apps.aiohttp_app:init_app
