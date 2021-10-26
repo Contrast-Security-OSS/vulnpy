@@ -9,6 +9,7 @@ except IOError:
     README = ""
 
 trigger_extras = {"PyYAML<6", "lxml>=4.3.1", "mock==3.*"}
+aiohttp_extras = {"aiohttp==3.7.*"} | trigger_extras
 django_extras = {"Django<4"} | trigger_extras
 falcon_extras = {"falcon<4", "falcon-multipart==0.2.0"} | trigger_extras
 flask_extras = {"Flask<3"} | trigger_extras
@@ -33,6 +34,7 @@ dev_extras = {"WebTest==2.0.*", "tox==3.*"}
 
 all_extras = (
     trigger_extras
+    | aiohttp_extras
     | django_extras
     | falcon_extras
     | flask_extras
@@ -75,6 +77,7 @@ setup(
     python_requires=">=2.7,!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*",
     extras_require={
         "all": all_extras,
+        "aiohttp": aiohttp_extras,
         "django": django_extras,
         "falcon": falcon_extras,
         "flask": flask_extras,
