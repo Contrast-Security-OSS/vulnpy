@@ -56,6 +56,10 @@ def generate_root_urls():
         view_func = gen_root_view(name)
 
         root_urls.append(web.get(view_name, view_func))
+        # aiohttp doesn't have automatic redirect if trailing slash is added
+        # so assigning the same view_func to two views will
+        # work for either case
+        root_urls.append(web.get(view_name + "/", view_func))
 
     return root_urls
 
