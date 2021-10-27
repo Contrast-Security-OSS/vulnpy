@@ -19,7 +19,6 @@ def init_app(argv):
     app.add_routes(routes)
     app.add_routes(vulnerable_routes)
 
-    breakpoint()
     return app
 
 
