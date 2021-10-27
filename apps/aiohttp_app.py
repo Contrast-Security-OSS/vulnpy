@@ -1,16 +1,14 @@
 from aiohttp import web
+import aiohttp_jinja2
+import jinja2
 
-routes = web.RouteTableDef()
-
-
-@routes.get("/")
-async def hello(request):
-    return web.Response(text="Hello, world")
+from vulnpy.aiohttp import vulnerable_routes
 
 
 def init_app(argv):
     app = web.Application()
-    app.add_routes(routes)  # vulnerable routes
+    aiohttp_jinja2.setup(app, loader=jinja2.FileSystemLoader("src/vulnpy/templates/"))
+    app.add_routes(vulnerable_routes)
     return app
 
 
