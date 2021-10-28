@@ -7,9 +7,6 @@ if sys.version_info < (3, 7):
 
 from aiohttp import web
 from aiohttp.test_utils import TestClient, TestServer, loop_context
-import aiohttp_jinja2
-import jinja2
-
 from vulnpy.aiohttp import vulnerable_routes  # noqa: E402
 
 from vulnpy.trigger import DATA  # noqa: E402
@@ -18,7 +15,6 @@ from tests import parametrize_root, parametrize_triggers  # noqa: E402
 
 def _create_example_app():
     app = web.Application()
-    aiohttp_jinja2.setup(app, loader=jinja2.FileSystemLoader("src/vulnpy/templates/"))
     app.add_routes(vulnerable_routes)
     return app
 
