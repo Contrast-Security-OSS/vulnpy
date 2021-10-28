@@ -1,5 +1,4 @@
 from aiohttp import web
-import aiohttp_jinja2
 from vulnpy.common import get_template
 from vulnpy.trigger import TRIGGER_MAP, get_trigger
 
@@ -10,10 +9,8 @@ def _get_user_input(request):
 
 def gen_root_view(name):
     async def _root_view(request):
-        response = aiohttp_jinja2.render_template(
-            "{}.html".format(name), request, context={}
-        )
-        return response
+        template = get_template("{}.html".format(name))
+        return web.Response(text=template, content_type="text/html")
 
     return _root_view
 
@@ -26,15 +23,12 @@ def get_trigger_view(name, trigger):
         if trigger_func:
             trigger_func(user_input)
 
+        template = get_template("{}.html".format(name))
+
         if name == "xss" and trigger == "raw":
-            template = get_template("{}.html".format(name))
             template += "<p>XSS: " + user_input + "</p>"
-            response = web.Response(text=template)
-        else:
-            response = aiohttp_jinja2.render_template(
-                "{}.html".format(name), request, context={}
-            )
-        return response
+
+        return web.Response(text=template, content_type="text/html")
 
     return _view
 
