@@ -5,18 +5,17 @@ from vulnpy.common import get_template
 
 from vulnpy.trigger import TRIGGER_MAP, get_trigger
 
-
-router = APIRouter(prefix="/vulnpy",)
+router = APIRouter()
 
 
 def get_root_name(name):
     if name == "home":
-        return "/"
-    return "/{}/".format(name)
+        return "/vulnpy"
+    return "/vulnpy/{}".format(name)
 
 
 def get_trigger_name(name, trigger):
-    return "/{}/{}/".format(name, trigger)
+    return "/vulnpy/{}/{}/".format(name, trigger)
 
 
 def gen_root_view(name):
