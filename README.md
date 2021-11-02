@@ -16,7 +16,7 @@ the appropriate extra dependencies specified - detailed below.
 Install vulnpy with flask extensions:
 
 ```
-pip install 'git+git://github.com/Contrast-Security-OSS/vulnpy#egg=vulnpy[flask]'
+pip install 'git+https://github.com/Contrast-Security-OSS/vulnpy#egg=vulnpy[flask]'
 ```
 
 When setting up your application, register the vulnerable blueprint to your `Flask` application
@@ -34,7 +34,7 @@ app.register_blueprint(vulnerable_blueprint)
 Install vulnpy with django extensions:
 
 ```
-pip install 'git+git://github.com/Contrast-Security-OSS/vulnpy#egg=vulnpy[django]'
+pip install 'git+https://github.com/Contrast-Security-OSS/vulnpy#egg=vulnpy[django]'
 ```
 
 Add vulnpy's routes to your `urlpatterns` sequence (in the module specified by the ROOT_URLCONF
@@ -57,7 +57,7 @@ urlpatterns = [
 Install vulnpy with pyramid extensions:
 
 ```
-pip install 'git+git://github.com/Contrast-Security-OSS/vulnpy#egg=vulnpy[pyramid]'
+pip install 'git+https://github.com/Contrast-Security-OSS/vulnpy#egg=vulnpy[pyramid]'
 ```
 
 During application configuration, include vulnpy's vulnerable routes:
@@ -72,7 +72,7 @@ config.include("vulnpy.pyramid.vulnerable_routes")
 Install vulnpy with falcon extensions:
 
 ```
-pip install 'git+git://github.com/Contrast-Security-OSS/vulnpy#egg=vulnpy[falcon]'
+pip install 'git+https://github.com/Contrast-Security-OSS/vulnpy#egg=vulnpy[falcon]'
 ```
 
 Use the `add_vulnerable_routes` function to register vulnpy's routes with your `Falcon.API`
@@ -90,7 +90,7 @@ vulnpy.falcon.add_vulnerable_routes(app)
 Install vulnpy with wsgi extensions:
 
 ```
-pip install 'git+git://github.com/Contrast-Security-OSS/vulnpy#egg=vulnpy[wsgi]'
+pip install 'git+https://github.com/Contrast-Security-OSS/vulnpy#egg=vulnpy[wsgi]'
 ```
 
 `vulnpy.wsgi.vulnerable_app` is a vulnerable WSGI application. This versatile component
@@ -102,7 +102,7 @@ which can be used to compose WSGI applications serially.
 Install vulnpy with bottle extensions:
 
 ```
-pip install 'git+git://github.com/Contrast-Security-OSS/vulnpy#egg=vulnpy[bottle]'
+pip install 'git+https://github.com/Contrast-Security-OSS/vulnpy#egg=vulnpy[bottle]'
 ```
 
 Use the `add_vulnerable_routes` function to register vulnpy's routes with your `bottle`
@@ -121,7 +121,7 @@ add_vulnerable_routes(app)
 Install vulnpy with fastapi extensions:
 
 ```
-pip install 'git+git://github.com/Contrast-Security-OSS/vulnpy#egg=vulnpy[fastapi]'
+pip install 'git+https://github.com/Contrast-Security-OSS/vulnpy#egg=vulnpy[fastapi]'
 ```
 
 Use the `include_router` function to register vulnpy's router with your `fastapi`
