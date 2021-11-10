@@ -25,7 +25,11 @@ gunicorn_max_extras = {
 uwsgi_max_extras = {"uwsgi==2.0.*"}
 uwsgi_min_extras = {"uwsgi==2.0.14"}
 gunicorn_min_extras = {"gunicorn==0.16.1"}
-pyramid_extras = {"pyramid<2", "waitress<2.1"} | trigger_extras
+pyramid_extras = {
+    "pyramid<2; python_version < '3.6'",
+    "pyramid<3; python_version >= '3.6'",
+    "waitress<2.1",
+} | trigger_extras
 
 wsgi_extras = trigger_extras
 bottle_extras = {"bottle<1"} | trigger_extras
