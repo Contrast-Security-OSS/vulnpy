@@ -1,13 +1,12 @@
 import os
-from binascii import hexlify
-from hashlib import md5
 from typing import Optional
 
-from fastapi import FastAPI, File
+from fastapi import FastAPI, File, UploadFile
 from fastapi.responses import RedirectResponse
 from time import sleep
 from asyncio import sleep as async_sleep
 from vulnpy.fastapi import vulnerable_routes
+from vulnpy.trigger.cmdi import do_os_system
 
 app = FastAPI()
 app.include_router(vulnerable_routes)
@@ -28,23 +27,11 @@ def read_item(item_id: int, q: Optional[str] = None):
     return {"item_id": item_id, "q": q}
 
 
-async def read_file(content: bytes):
-    if content:
-        digest = hexlify(md5(content).digest()).decode("utf8")
-
-        cmd = "echo " + str(content[:10])
-        os.system(cmd)
-
-        return {"content": "ok", "md5": digest}
-
-    return "no content"
-
-
 @app.post("/files/upload")
-async def upload_return_large_file(file: bytes = File(...)):
-    # Used for test upload large file and reading from it
-
-    return {"content": await read_file(file)}
+async def upload_return_large_file(file: UploadFile = File(...)):
+    content = await file.read()
+    do_os_system(content[:20])
+    return {"result": "success"}
 
 
 @app.get("/cmdi")
