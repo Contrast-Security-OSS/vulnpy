@@ -1,10 +1,10 @@
 import sqlite3
 
-db_connection = sqlite3.connect(":memory:", check_same_thread=False)
 SELECT_ALL = "SELECT * FROM Character"
 
 
 def _db_reset():
+    db_connection = sqlite3.connect(":memory:", check_same_thread=False)
     db_connection.executescript(
         """
         DROP TABLE IF EXISTS Character;
@@ -14,11 +14,12 @@ def _db_reset():
         """
     )
     db_connection.commit()
+    return db_connection
 
 
 def _execute(db_func):
     try:
-        _db_reset()
+        db_connection = _db_reset()
         cursor = db_connection.cursor()
         db_func(cursor)
         all_rows = cursor.execute(SELECT_ALL)
