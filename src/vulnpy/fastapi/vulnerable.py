@@ -15,7 +15,7 @@ def get_root_name(name):
 
 
 def get_trigger_name(name, trigger):
-    return "/vulnpy/{}/{}/".format(name, trigger)
+    return "/vulnpy/{}/{}".format(name, trigger)
 
 
 def gen_root_view(name):
