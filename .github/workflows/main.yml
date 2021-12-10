@@ -2,8 +2,11 @@ name: Main pipeline
 
 on: [push]
 
-jobs:
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: true
 
+jobs:
   black:
     runs-on: ubuntu-18.04
     steps:
@@ -33,7 +36,7 @@ jobs:
     runs-on: ubuntu-18.04
     strategy:
       matrix:
-        python-version: [2.7, 3.5, 3.6, 3.7, 3.8]
+        python-version: [3.7, 3.8, 3.9]
 
     steps:
       - uses: actions/checkout@v2
@@ -72,4 +75,5 @@ jobs:
       - name: Compute coverage
         run: |
           coverage combine artifact/
-          coverage report -i -m --fail-under=100
+          coverage report -i -m --fail-under=99
+#          Todo: PYT-1971
