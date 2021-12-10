@@ -14,14 +14,12 @@ with Configurator() as config:
     config.include("vulnpy.pyramid.vulnerable_routes")
     config.add_route("index", "/")
     config.add_view(index, route_name="index")
+    app = config.make_wsgi_app()
 
     if os.environ.get("VULNPY_USE_CONTRAST"):
-        # TODO: be able to import as "contrast.pyramid.ContrastMiddleware"
-        config.add_tween(
-            "contrast.agent.middlewares.pyramid_middleware.PyramidMiddleware"
-        )
+        from contrast.pyramid import ContrastMiddleware
 
-    app = config.make_wsgi_app()
+        app = ContrastMiddleware(app)
 
 
 if __name__ == "__main__":
