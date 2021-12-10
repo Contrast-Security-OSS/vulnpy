@@ -34,9 +34,7 @@ class TestPickleLoads(BasePickleTest, BaseTriggerTest):
 
 
 class BaseYamlTest(object):
-    @property
-    def good_input(self):
-        return '!!python/object/apply:subprocess.Popen [["echo", "Hello World"]]', None
+    sample_input = '!!python/object/apply:subprocess.Popen [["echo", "Hello World"]]'
 
     @property
     def exception_input(self):
@@ -51,11 +49,27 @@ class BaseYamlTest(object):
 
 class TestYamlLoad(BaseYamlTest, BaseTriggerTest):
     @property
+    def good_input(self):
+        return (
+            self.sample_input,
+            None,
+            lambda result, expected_result: result.returncode is expected_result,
+        )
+
+    @property
     def trigger_func(self):
         return deserialization.do_yaml_load
 
 
 class TestYamlLoadAll(BaseYamlTest, BaseTriggerTest):
+    @property
+    def good_input(self):
+        return (
+            self.sample_input,
+            None,
+            lambda result, expected_result: result[0].returncode is expected_result,
+        )
+
     @property
     def trigger_func(self):
         return deserialization.do_yaml_load_all
