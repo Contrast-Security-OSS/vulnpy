@@ -8,26 +8,24 @@ try:
 except IOError:
     README = ""
 
-trigger_extras = {"PyYAML<6", "lxml>=4.3.1", "mock==3.*"}
-aiohttp_extras = {"aiohttp==3.7.*; python_version >= '3.7'"} | trigger_extras
+trigger_extras = {"PyYAML<7", "lxml>=4.3.1", "mock==3.*"}
+aiohttp_extras = {"aiohttp==3.7.*"} | trigger_extras
 django_extras = {"Django<4"} | trigger_extras
 falcon_extras = {"falcon<4", "falcon-multipart==0.2.0"} | trigger_extras
 flask_extras = {"Flask<3"} | trigger_extras
 fastapi_extras = {
-    "fastapi<=0.70; python_version >= '3.6'",
-    "uvicorn[standard]; python_version >= '3.6'",
+    "fastapi<=0.70",
+    "uvicorn[standard]",
     "python-multipart<1",
 } | trigger_extras
 gunicorn_max_extras = {
-    "gunicorn<20.1; python_version < '3.6'",
-    "gunicorn==20.1.*; python_version >= '3.6'",
+    "gunicorn==20.1.*",
 }
 uwsgi_max_extras = {"uwsgi==2.0.*"}
 uwsgi_min_extras = {"uwsgi==2.0.14"}
 gunicorn_min_extras = {"gunicorn==0.16.1"}
 pyramid_extras = {
-    "pyramid<2; python_version < '3.6'",
-    "pyramid<3; python_version >= '3.6'",
+    "pyramid<3",
     "waitress<2.1",
 } | trigger_extras
 
@@ -53,7 +51,7 @@ all_extras = (
 
 setup(
     name="vulnpy",
-    version="0.1.0",
+    version="0.2.0",
     description="Purposely-vulnerable functions for application security testing",
     long_description=README,
     long_description_content_type="text/markdown",
@@ -62,13 +60,10 @@ setup(
         "Intended Audience :: Developers",
         "License :: OSI Approved :: MIT License",
         "Programming Language :: Python",
-        "Programming Language :: Python :: 2",
-        "Programming Language :: Python :: 2.7",
         "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.5",
-        "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.9",
     ],
     keywords="security testing",
     author="Contrast Security, Inc.",
@@ -78,7 +73,7 @@ setup(
     include_package_data=True,
     packages=find_packages("src"),
     package_dir={"": "src"},
-    python_requires=">=2.7,!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*",
+    python_requires=">=3.7",
     extras_require={
         "all": all_extras,
         "aiohttp": aiohttp_extras,
