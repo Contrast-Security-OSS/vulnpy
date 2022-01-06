@@ -1,5 +1,4 @@
 import re
-from vulnpy.vendor import six
 
 PATTERN = r"((a)+)+"
 
@@ -51,20 +50,12 @@ def do_re_findall_compiled(user_input):
 
 
 def do_re_fullmatch(user_input):
-    if six.PY2:
-        # fulmmatch is Py3 only
-        return None
-
     match = re.fullmatch(PATTERN, user_input)
     if match:
         return match.group(0)
 
 
 def do_re_fullmatch_compiled(user_input):
-    if six.PY2:
-        # fulmmatch is Py3 only
-        return None
-
     pattern = re.compile(PATTERN)
     match = pattern.fullmatch(user_input)
     if match:

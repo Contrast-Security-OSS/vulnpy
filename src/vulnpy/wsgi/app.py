@@ -2,10 +2,7 @@ from vulnpy.common import get_template
 from vulnpy.trigger import TRIGGER_MAP, get_trigger, xss
 from vulnpy.vendor import six
 
-if six.PY2:
-    from urlparse import parse_qs
-else:
-    from urllib.parse import parse_qs
+from urllib.parse import parse_qs
 
 
 def vulnerable_app(environ, start_response):
