@@ -48,6 +48,7 @@ def generate_root_urls():
     for name in TRIGGER_MAP:
         view_name = get_root_name(name)
         view_func = gen_root_view(name)
+        setattr(view_func, "__name__", view_name)
 
         root_urls.append(web.get(view_name, view_func))
         # aiohttp doesn't have automatic redirect if trailing slash is added
@@ -66,6 +67,7 @@ def generate_trigger_urls():
             view_name = get_trigger_name(name, trigger)
             view_func = get_trigger_view(name, trigger)
 
+            setattr(view_func, "__name__", view_name)
             trigger_urls.append(web.get(view_name, view_func))
 
     return trigger_urls
