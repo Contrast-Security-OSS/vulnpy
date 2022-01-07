@@ -13,4 +13,3 @@ def ensure_str(s, encoding="utf-8", errors="strict"):
         return s.decode(encoding, errors)
     elif not isinstance(s, (str, bytes)):
         raise TypeError(f"not expecting type '{type(s)}'")
-    return s
