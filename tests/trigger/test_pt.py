@@ -1,8 +1,5 @@
 import os
 
-import pytest
-from vulnpy.vendor import six
-
 from vulnpy.trigger import pt
 from tests.trigger.base_test import BaseTriggerTest
 
@@ -63,7 +60,6 @@ class TestTarfileBZ2Open(BaseOpenTest):
         return pt.do_tarfile_bz2
 
 
-@pytest.mark.skipif(six.PY2, reason="execfile only exists in PY2")
 class TestBZ2Open(BaseOpenTest):
     @property
     def good_input(self):
@@ -96,7 +92,6 @@ class TestOpen(BaseOpenTest):
         return pt.do_open
 
 
-@pytest.mark.skipif(six.PY2, reason="execfile only exists in PY2")
 class TestExecfile(BaseOpenTest):
     @property
     def trigger_func(self):
