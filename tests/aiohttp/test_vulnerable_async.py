@@ -46,7 +46,7 @@ def test_trigger_views(view_name, trigger_name):
                     data = "'{}'".format(data)
 
                 response = await client.get(
-                    "/vulnpy/{}/{}/".format(view_name, trigger_name),
+                    "/vulnpy/{}/{}".format(view_name, trigger_name),
                     params={"user_input": data},
                 )
 
