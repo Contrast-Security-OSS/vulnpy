@@ -40,7 +40,7 @@ def get_root_name(name):
 
 
 def get_trigger_name(name, trigger):
-    return "/vulnpy/{}/{}/".format(name, trigger)
+    return "/vulnpy/{}/{}".format(name, trigger)
 
 
 def generate_root_urls():
