@@ -20,3 +20,6 @@ dist
 # contrast
 contrast_security.yml
 contrast_security.yaml
+
+# config
+config.json

@@ -18,6 +18,6 @@ def index():
 
 
 if os.environ.get("VULNPY_USE_CONTRAST"):
-    from contrast.flask import ContrastMiddleware
+    from dongtai_agent_python.middlewares.flask_middleware import AgentMiddleware
 
-    app.wsgi_app = ContrastMiddleware(app)
+    app.wsgi_app = AgentMiddleware(app.wsgi_app, app)

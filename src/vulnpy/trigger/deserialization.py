@@ -1,6 +1,7 @@
 import io
 import pickle
 import yaml
+import base64
 
 
 def do_pickle_load(user_input):
@@ -9,7 +10,8 @@ def do_pickle_load(user_input):
 
 
 def do_pickle_loads(user_input):
-    return pickle.loads(user_input.encode("utf-8"))
+    res = base64.b64decode(user_input.encode("utf-8"))
+    return pickle.loads(res)
 
 
 def do_yaml_load(user_input):
