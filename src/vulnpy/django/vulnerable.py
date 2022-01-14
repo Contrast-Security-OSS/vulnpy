@@ -11,6 +11,7 @@ from vulnpy.trigger import TRIGGER_MAP, get_trigger
 
 def _get_user_input(request):
     if request.method == "GET":
+
         return request.GET.get("user_input", "")
     return request.POST.get("user_input", "")
 

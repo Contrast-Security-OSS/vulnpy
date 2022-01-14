@@ -14,10 +14,10 @@ WORKDIR /vulnpy
 
 COPY . .
 
-RUN pip install -e ".[flask]"  -i ${PYPI_MIRROR} \
+RUN pip install -e ".[django]"  -i ${PYPI_MIRROR} \
   && pip install /DongTai-agent-python/
-ENV PORT="3010"
-ENV FRAMEWORK="flask"
+ENV PORT="3020"
+ENV FRAMEWORK="django"
 ENV HOST="0.0.0.0"
 ENV VULNPY_USE_CONTRAST="true"
 
