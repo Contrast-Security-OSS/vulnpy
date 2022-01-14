@@ -1,11 +1,8 @@
 from vulnpy.common import get_template
 from vulnpy.trigger import TRIGGER_MAP, get_trigger, xss
-from vulnpy.vendor import six
+from vulnpy.utils.utils_string import ensure_binary
 
-if six.PY2:
-    from urlparse import parse_qs
-else:
-    from urllib.parse import parse_qs
+from urllib.parse import parse_qs
 
 
 def vulnerable_app(environ, start_response):
@@ -39,7 +36,7 @@ def vulnerable_app(environ, start_response):
 
     start_response("200 OK", headers)
 
-    return [six.ensure_binary(s) for s in response]
+    return [ensure_binary(s) for s in response]
 
 
 class NotFound(Exception):

@@ -1,4 +1,3 @@
-from vulnpy.vendor import six
 from vulnpy.trigger import rand
 from tests.trigger.base_test import BaseTriggerTest
 
@@ -20,7 +19,7 @@ class TestRandom(BaseRandomTest):
 
     @property
     def good_input(self):
-        return "my-seed1", "0.9353490848502687" if six.PY3 else "0.00366308706284"
+        return "my-seed1", "0.9353490848502687"
 
 
 class TestRandint(BaseRandomTest):
@@ -30,7 +29,7 @@ class TestRandint(BaseRandomTest):
 
     @property
     def good_input(self):
-        return "my-seed2", "72" if six.PY3 else "7"
+        return "my-seed2", "72"
 
 
 class TestRandrange(BaseRandomTest):
@@ -40,7 +39,7 @@ class TestRandrange(BaseRandomTest):
 
     @property
     def good_input(self):
-        return "my-seed3", "50" if six.PY3 else "100"
+        return "my-seed3", "50"
 
 
 class TestUniform(BaseRandomTest):
@@ -50,4 +49,4 @@ class TestUniform(BaseRandomTest):
 
     @property
     def good_input(self):
-        return "my-seed4", "6.239853530761573" if six.PY3 else "6.36829385722"
+        return "my-seed4", "6.239853530761573"

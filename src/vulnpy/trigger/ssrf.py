@@ -11,18 +11,10 @@ import io
 import mock
 import os
 
-from vulnpy.vendor import six
+from urllib.request import Request, urlopen
+from http.client import HTTPConnection, HTTPSConnection
 
-if six.PY2:
-    from urllib2 import Request, urlopen
-    from httplib import HTTPConnection, HTTPSConnection
-    from urllib import urlopen as legacy_urlopen
-
-else:
-    from urllib.request import Request, urlopen
-    from http.client import HTTPConnection, HTTPSConnection
-
-    legacy_urlopen = urlopen
+legacy_urlopen = urlopen
 
 
 EXCEPTION_CODE = -100
