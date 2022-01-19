@@ -1,3 +1,4 @@
+import importlib
 import os
 from typing import Optional
 
@@ -6,7 +7,7 @@ from fastapi.responses import RedirectResponse
 from time import sleep
 from asyncio import sleep as async_sleep
 from vulnpy.fastapi import vulnerable_routes
-from vulnpy.trigger.cmdi import do_os_system
+from vulnpy.trigger import cmdi as cmdi_module
 
 app = FastAPI()
 app.include_router(vulnerable_routes)
@@ -15,6 +16,7 @@ if os.environ.get("VULNPY_USE_CONTRAST"):
     from contrast.fastapi import ContrastMiddleware
 
     app.add_middleware(ContrastMiddleware, original_app=app)
+    importlib.reload(cmdi_module)
 
 
 @app.get("/")
@@ -30,7 +32,7 @@ def read_item(item_id: int, q: Optional[str] = None):
 @app.post("/files/upload")
 async def upload_return_large_file(file: UploadFile = File(...)):
     content = await file.read()
-    do_os_system(content[:20])
+    cmdi_module.do_os_system(content[:20])
     return {"result": "success"}
 
 

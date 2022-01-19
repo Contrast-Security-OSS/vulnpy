@@ -1,7 +1,9 @@
+import importlib
 import os
 import sys
 from bottle import Bottle, run, redirect
 from vulnpy.bottle import add_vulnerable_routes
+from vulnpy.trigger import cmdi
 
 
 app = Bottle(__name__)
@@ -26,6 +28,7 @@ if os.environ.get("VULNPY_USE_CONTRAST"):
     from contrast.bottle import ContrastMiddleware
 
     app = ContrastMiddleware(app)
+    importlib.reload(cmdi)
 
 if __name__ == "__main__":
     host = sys.argv[1] if len(sys.argv) > 1 else "localhost"

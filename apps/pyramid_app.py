@@ -1,9 +1,12 @@
+import importlib
 import os
 import sys
 
 from pyramid.config import Configurator
 from pyramid.httpexceptions import HTTPFound
 from waitress import serve
+
+from vulnpy.trigger import cmdi
 
 
 def index(request):
@@ -20,6 +23,7 @@ with Configurator() as config:
         from contrast.pyramid import ContrastMiddleware
 
         app = ContrastMiddleware(app)
+        importlib.reload(cmdi)
 
 
 if __name__ == "__main__":

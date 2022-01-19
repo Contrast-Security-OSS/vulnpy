@@ -1,3 +1,4 @@
+import importlib
 from binascii import hexlify
 from hashlib import md5
 import os
@@ -6,6 +7,8 @@ import sys
 import falcon
 import vulnpy.falcon
 import time
+
+from vulnpy.trigger import cmdi
 
 MIDDLEWARE = []
 if os.environ.get("VULNPY_FALCON_MULTIPART_MIDDLEWARE"):
@@ -87,3 +90,4 @@ if os.environ.get("VULNPY_USE_CONTRAST"):
     from contrast.falcon import ContrastMiddleware
 
     app = ContrastMiddleware(app)
+    importlib.reload(cmdi)

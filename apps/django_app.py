@@ -1,3 +1,4 @@
+import importlib
 import os
 import sys
 
@@ -12,6 +13,7 @@ except ImportError:
     from django.conf.urls import url as compat_url
 
 from vulnpy.django import vulnerable_urlpatterns
+from vulnpy.trigger import cmdi
 
 
 urlpatterns = [
@@ -34,6 +36,7 @@ if os.environ.get("VULNPY_USE_CONTRAST"):
     from contrast.django import ContrastMiddleware
 
     application = ContrastMiddleware(application)
+    importlib.reload(cmdi)
 
 if __name__ == "__main__":
     management.execute_from_command_line(sys.argv)

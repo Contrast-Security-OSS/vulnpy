@@ -1,6 +1,8 @@
+import importlib
 from aiohttp import web
 import os
 from vulnpy.aiohttp import vulnerable_routes
+from vulnpy.trigger import cmdi
 
 routes = web.RouteTableDef()
 
@@ -17,6 +19,7 @@ def init_app(argv):
         from contrast.aiohttp import ContrastMiddleware
 
         middlewares = [ContrastMiddleware(app_name="vulnpy app")]
+        importlib.reload(cmdi)
 
     app = web.Application(middlewares=middlewares)
     app.add_routes(routes)

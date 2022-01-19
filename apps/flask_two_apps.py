@@ -1,8 +1,10 @@
+import importlib
 import os
 
 from flask import Flask
 
 from vulnpy.flask.blueprint import vulnerable_blueprint
+from vulnpy.trigger import cmdi
 from werkzeug.middleware.dispatcher import DispatcherMiddleware
 
 
@@ -31,6 +33,7 @@ if os.environ.get("VULNPY_USE_CONTRAST"):
 
     app1.wsgi_app = ContrastMiddleware(app1)
     app2.wsgi_app = ContrastMiddleware(app2)
+    importlib.reload(cmdi)
 
     primary_app.wsgi_app = DispatcherMiddleware(
         primary_app.wsgi_app, {"/app1": app1.wsgi_app, "/app2": app2.wsgi_app}

@@ -1,8 +1,10 @@
+import importlib
 import os
 import sys
 from wsgiref.simple_server import make_server
 
 from vulnpy.wsgi import vulnerable_app
+from vulnpy.trigger import cmdi
 
 
 def rerouter_middleware(app):
@@ -26,6 +28,7 @@ def make_app():
         from contrast.wsgi import ContrastMiddleware
 
         app = ContrastMiddleware(app)
+        importlib.reload(cmdi)
 
     return app
 
