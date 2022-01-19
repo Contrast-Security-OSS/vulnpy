@@ -9,7 +9,7 @@ class TestOsSystem(BaseTriggerTest):
 
     @property
     def good_input(self):
-        return "echo hacked", 0
+        return "hacked", 0
 
     @property
     def exception_input(self):
@@ -23,7 +23,7 @@ class TestSubprocessPopen(BaseTriggerTest):
 
     @property
     def good_input(self):
-        return "echo hacked", b"hacked\n"
+        return "hacked", b"hacked\n"
 
     @property
     def exception_input(self):
