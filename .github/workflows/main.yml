@@ -1,6 +1,5 @@
 name: Main pipeline
 
-
 on:
   push:
     branches: [ devsong ]
