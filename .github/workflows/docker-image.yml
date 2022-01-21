@@ -1,18 +1,29 @@
-name: Docker Image CI
+
+name: Vul Test
 
 on:
   push:
-    branches: [ master ]
+    branches:
+      - jinghao1-path-1
   pull_request:
-    branches: [ master ]
+    branches:
+      - jinghao1-path-1
 
 jobs:
-
   build:
 
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+
+      - name: Run Vul Container
+        env:
+          PROJECT_VERSION: 'v1.0.${{ github.run_id }}'
+        run: |
+          cd /vulnpy
+          docker-compose up -d
+
+      - name: Run Vul test
+        run: |
+          bash /vulnpy/tests/vul-test.sh
+

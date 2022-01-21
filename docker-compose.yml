@@ -1,0 +1,20 @@
+version: '3.8'
+
+
+services:
+
+  djangoweb:
+    build:
+      context: .
+      dockerfile: ./vulnpy/Dockerfile
+    container_name: mysite.djangoweb
+    volumes:
+      - ./vulnpy:/vulnpy
+    environment:
+      DEBUG: 1
+      AUTO_CREATE_PROJECT: 1
+      PROJECT_NAME: ${PROJECT_NAME:-Python-Vulnpy-Django}
+      PROJECT_VERSION: ${PROJECT_VERSION:-v1.2.0}
+      ENGINE_NAME: ${ENGINE_NAME:-github-vul-test-django}
+    expose:
+      - "3020"
