@@ -29,7 +29,7 @@ if not settings.configured:
         }
     )
     settings.MIDDLEWARE.insert(0, "dongtai_agent_python.middlewares.django_middleware.FireMiddleware")
-#
+# don`t  run two
 # if os.environ.get("VULNPY_USE_CONTRAST"):
 #     settings.MIDDLEWARE.insert(0, "dongtai_agent_python.middlewares.django_middleware.FireMiddleware")
 #     print(settings.MIDDLEWARE)
