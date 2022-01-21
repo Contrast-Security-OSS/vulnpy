@@ -6,11 +6,11 @@ weak hash functions in the first place.
 """
 
 import hashlib
-from vulnpy.vendor import six
+from vulnpy.utils.utils_string import ensure_binary
 
 
 def _hash(hasher, user_input):
-    b = six.ensure_binary(user_input, errors="ignore")
+    b = ensure_binary(user_input, errors="ignore")
     hasher.update(b)
     return hasher.hexdigest()
 

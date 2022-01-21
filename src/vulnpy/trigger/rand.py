@@ -5,18 +5,13 @@ To keep things interesting we reseed the random number generator with
 the user's input. This is not necessary for the vulnerability to be present.
 """
 
-import binascii
 import random
-
-from vulnpy.vendor import six
 
 
 def _seed(user_input):
     """
     For seeding to be deterministic in PY2 we need to pass in an integer
     """
-    if six.PY2:
-        user_input = binascii.crc32(user_input)
     random.seed(user_input)
 
 
