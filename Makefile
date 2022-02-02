@@ -43,10 +43,10 @@ django: templates
 	python apps/django_app.py runserver --noreload $(HOST):$(PORT)
 
 django-uwsgi: templates
-	uwsgi $(UWSGI_OPTIONS) -w apps.django_app:application
+	uwsgi $(UWSGI_OPTIONS) -w apps.django_app:vulnpy_app
 
 django-gunicorn: templates
-	gunicorn $(GUNICORN_OPTIONS) apps.django_app:application
+	gunicorn $(GUNICORN_OPTIONS) apps.django_app:vulnpy_app
 
 wsgi: templates
 	python apps/wsgi_app.py $(HOST) $(PORT)
