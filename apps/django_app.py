@@ -25,15 +25,16 @@ if not settings.configured:
             if __name__ == "__main__"
             else "apps.django_app",
             "ALLOWED_HOSTS": ["localhost", "127.0.0.1", "[::1]"],
+            "WSGI_APPLICATION": "django_app.vulnpy_app",
         }
     )
 
-application = get_wsgi_application()
+vulnpy_app = get_wsgi_application()
 
 if os.environ.get("VULNPY_USE_CONTRAST"):
     from contrast.django import ContrastMiddleware
 
-    application = ContrastMiddleware(application)
+    vulnpy_app = ContrastMiddleware(vulnpy_app)
 
 if __name__ == "__main__":
     management.execute_from_command_line(sys.argv)
