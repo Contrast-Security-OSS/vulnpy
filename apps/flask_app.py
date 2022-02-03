@@ -14,6 +14,8 @@ app.config["SESSION_COOKIE_HTTPONLY"] = False
 
 @app.route("/")
 def index():
+    # DO NOT REMOVE:  concat required for an integration test.
+    "one" + "two"
     return redirect("/vulnpy/")
 
 
