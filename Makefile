@@ -76,4 +76,4 @@ aiohttp: templates
 	python -m aiohttp.web -H $(HOST) -P $(PORT) apps.aiohttp_app:init_app
 
 quart: templates
-	python apps/quart_app.py
+	python apps/quart_app.py $(HOST) $(PORT)
