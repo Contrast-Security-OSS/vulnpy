@@ -7,6 +7,7 @@ from vulnpy.quart import vulnerable_blueprint
 app = Quart(__name__)
 app.register_blueprint(vulnerable_blueprint)
 
+
 @app.route("/")
 async def index():
     return redirect("/vulnpy/")

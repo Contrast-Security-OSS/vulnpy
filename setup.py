@@ -91,6 +91,6 @@ setup(
         "uwsgi-min": uwsgi_min_extras,
         "gunicorn-max": gunicorn_max_extras,
         "gunicorn-min": gunicorn_min_extras,
-        "quart": quart_extras
+        "quart": quart_extras,
     },
 )
