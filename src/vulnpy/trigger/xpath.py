@@ -2,7 +2,7 @@ import lxml.etree
 import xml.etree.ElementTree as ET
 from io import StringIO
 
-xml = u"""
+xml = """
     <planets>
         <planet>
             <name>Kepler</name>
