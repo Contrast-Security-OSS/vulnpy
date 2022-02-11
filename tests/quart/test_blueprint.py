@@ -8,22 +8,26 @@ from tests import parametrize_root, parametrize_triggers
 
 
 @pytest.fixture(scope="module")
-def client():
+def app():
     app = Quart(__name__)
     app.register_blueprint(vulnerable_blueprint)
-    with app.test_client() as client:
-        yield client
+    yield app
 
 
+@pytest.mark.asyncio
 @parametrize_root
-def test_root_views(client, view_path):
-    response = client.get(view_path)
+async def test_root_views(app, view_path):
+    client = app.test_client()
+    response = await client.get(view_path)
     assert response.status_code == 200
 
 
+@pytest.mark.asyncio
 @parametrize_triggers
 @pytest.mark.parametrize("request_method", ["get", "post"])
-def test_trigger(client, request_method, view_name, trigger_name):
+async def test_trigger(app, request_method, view_name, trigger_name):
+    client = app.test_client()
+
     get_or_post = getattr(client, request_method)
 
     data = DATA[view_name]
@@ -31,19 +35,21 @@ def test_trigger(client, request_method, view_name, trigger_name):
     if view_name == "unsafe_code_exec":
         data = "'{}'".format(data)
 
-    response = get_or_post(
+    response = await get_or_post(
         "/vulnpy/{}/{}/?user_input={}".format(view_name, trigger_name, data),
         data={"user_input": data},
     )
     assert response.status_code == 200
 
     if view_name == "xss":
-        assert "<p>XSS: {}</p>".format(data) in str(response.get_data())
+        assert "<p>XSS: {}</p>".format(data) in str(await response.get_data())
 
 
-def test_trigger_header_source(client):
+@pytest.mark.asyncio
+async def test_trigger_header_source(app):
     data = DATA["cmdi"]
 
-    response = client.get("/vulnpy/cmdi/os-system", headers={"user_input": data})
+    client = app.test_client()
+    response = await client.get("/vulnpy/cmdi/os-system", headers={"user_input": data})
 
     assert response.status_code == 200
