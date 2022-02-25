@@ -1,6 +1,9 @@
 from django.http import HttpResponse
 
-from django.conf.urls import url as compat_url
+try:
+    from django.conf.urls import url as compat_url
+except ImportError:
+    from django.urls import re_path as compat_url
 
 from vulnpy.common import get_template
 from vulnpy.trigger import TRIGGER_MAP, get_trigger
