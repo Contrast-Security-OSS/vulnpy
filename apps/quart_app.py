@@ -2,9 +2,10 @@ import sys
 
 from quart import Quart, redirect
 from vulnpy.quart import vulnerable_blueprint
-
+from contrast.quart import ContrastMiddleware
 
 app = Quart(__name__)
+app.asgi_app = ContrastMiddleware(app)
 app.register_blueprint(vulnerable_blueprint)
 
 
