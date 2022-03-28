@@ -31,7 +31,10 @@ pyramid_extras = {
 
 wsgi_extras = trigger_extras
 bottle_extras = {"bottle<1"} | trigger_extras
-quart_extras = {"quart==0.16.*"} | trigger_extras
+quart_extras = {
+    "quart==0.16.*",
+    "Jinja2<3.1",  # required for quart until they pin their dependency
+} | trigger_extras
 
 dev_extras = {"WebTest==2.0.*", "tox==3.*"}
 
