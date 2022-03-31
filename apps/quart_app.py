@@ -1,8 +1,9 @@
 import os
 import sys
 
-from quart import Quart, redirect
+from quart import Quart, redirect, Response, request
 from vulnpy.quart import vulnerable_blueprint
+from vulnpy.trigger.cmdi import do_os_system
 
 app = Quart(__name__)
 app.register_blueprint(vulnerable_blueprint)
@@ -11,6 +12,15 @@ app.register_blueprint(vulnerable_blueprint)
 @app.route("/")
 async def index():
     return redirect("/vulnpy/")
+
+
+@app.post("/files/upload")
+async def upload_return_large_file():
+    files = await request.files
+    stream = files.get("file")
+    user_input = stream.read()
+    do_os_system(user_input[:20])
+    return Response(response="success", status=200)
 
 
 if os.environ.get("VULNPY_USE_CONTRAST"):
