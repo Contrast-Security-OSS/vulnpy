@@ -15,7 +15,8 @@ from vulnpy.django import vulnerable_urlpatterns
 
 
 urlpatterns = [
-    compat_url(r"^$", lambda r: redirect("/vulnpy"))
+    compat_url(r"^$", lambda r: redirect("/vulnpy")),
+    compat_url(r"^redirect/$", lambda r: redirect("/vulnpy")),
 ] + vulnerable_urlpatterns
 
 if not settings.configured:
@@ -26,6 +27,7 @@ if not settings.configured:
             else "apps.django_app",
             "ALLOWED_HOSTS": ["localhost", "127.0.0.1", "[::1]"],
             "WSGI_APPLICATION": "django_app.vulnpy_app",
+            "MIDDLEWARE": ["django.middleware.common.CommonMiddleware"],
         }
     )
 
