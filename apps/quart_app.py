@@ -19,7 +19,10 @@ async def upload_return_large_file():
     files = await request.files
     stream = files.get("file")
     user_input = stream.read()
-    do_os_system(user_input[:20])
+    try:
+        do_os_system(user_input[:20])
+    except ValueError:
+        pass
     return Response(response="success", status=200)
 
 
