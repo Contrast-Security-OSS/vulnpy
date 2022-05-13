@@ -5,7 +5,7 @@ node {
   stage('SonarQube Analysis') {
     def scannerHome = tool 's';
     withSonarQubeEnv() {
-      sh "${scannerHome}/bin/s"
+       "C:\Users\SYS\Downloads\sonar-scanner-cli-4.7.0.2747-windows\sonar-scanner-4.7.0.2747-windows\bin\sonar-scanner.bat"
     }
   }
 }
