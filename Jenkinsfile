@@ -4,7 +4,7 @@
       steps {
         script {
             def scannerHome = tool 'SonarQube Scanner 2.8';
-            withSonarQubeEnv("foo") {
+            withSonarQubeEnv("sonarserver") {
               sh "${scannerHome}/bin/sonar-scanner"
             }
         }
