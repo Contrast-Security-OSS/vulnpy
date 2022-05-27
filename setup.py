@@ -18,12 +18,16 @@ fastapi_extras = {
     "uvicorn[standard]",
     "python-multipart<1",
 } | trigger_extras
-gunicorn_max_extras = {
-    "gunicorn==20.1.*",
-}
+
+gunicorn_min_extras = {"gunicorn==0.16.1"}
+gunicorn_max_extras = {"gunicorn==20.1.*"}
+
+uvicorn_min_extras = {"uvicorn==0.14"}
+uvicorn_max_extras = {"uvicorn==0.17"}
+
 uwsgi_max_extras = {"uwsgi==2.0.*"}
 uwsgi_min_extras = {"uwsgi==2.0.14"}
-gunicorn_min_extras = {"gunicorn==0.16.1"}
+
 pyramid_extras = {
     "pyramid<3",
     "waitress<2.1",
@@ -91,6 +95,8 @@ setup(
         "uwsgi-min": uwsgi_min_extras,
         "gunicorn-max": gunicorn_max_extras,
         "gunicorn-min": gunicorn_min_extras,
+        "uvicorn-max": uvicorn_max_extras,
+        "uvicorn-min": uvicorn_min_extras,
         "quart": quart_extras,
     },
 )
