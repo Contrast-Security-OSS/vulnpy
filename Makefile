@@ -54,6 +54,12 @@ django-uwsgi: templates
 django-gunicorn: templates
 	gunicorn $(GUNICORN_OPTIONS) apps.django_app:vulnpy_app
 
+django-asgi: # django has no default server, so we use uvicorn
+	$(error Django ASGI  requires a production webserver - try `make django-uvicorn`)
+
+django-uvicorn: templates
+	uvicorn apps.django_asgi_app:vulnpy_app --host $(HOST) --port $(PORT)
+
 wsgi: templates
 	python apps/wsgi_app.py $(HOST) $(PORT)
 
