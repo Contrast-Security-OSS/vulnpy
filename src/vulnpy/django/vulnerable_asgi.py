@@ -12,7 +12,8 @@ from vulnpy.trigger import TRIGGER_MAP, get_trigger
 async def _get_user_input(request):
     if request.method == "GET":
         return request.GET.get("user_input", "")
-    return request.POST.get("user_input", "")
+    if request.body:
+        return request.POST.get("user_input", "")
 
 
 def gen_root_view(name):
@@ -24,7 +25,7 @@ def gen_root_view(name):
 
 def get_trigger_view(name, trigger):
     async def _view(request):
-        user_input = _get_user_input(request)
+        user_input = await _get_user_input(request)
         trigger_func = get_trigger(name, trigger)
 
         if trigger_func:

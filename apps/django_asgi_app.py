@@ -9,21 +9,19 @@ try:
     from django.urls import re_path as compat_url
 except ImportError:
     from django.conf.urls import url as compat_url
-from vulnpy.django import vulnerable_asgi_urlpatterns
+import vulnpy.django
 
 urlpatterns = [
     compat_url(r"^$", lambda r: redirect("/vulnpy"))
-] + vulnerable_asgi_urlpatterns
+] + vulnpy.django.vulnerable_asgi_urlpatterns
 
 if not settings.configured:
     settings.configure(
         **{
-            "ROOT_URLCONF": "django_app"
+            "ROOT_URLCONF": "django_asgi_app"
             if __name__ == "__main__"
-            else "apps.django_app",
+            else "apps.django_asgi_app",
             "ALLOWED_HOSTS": ["localhost", "127.0.0.1", "[::1]"],
-            "ASGI_APPLICATION": "django_app.vulnpy_app",
-            "INSTALLED_APPS": [],
         }
     )
 
