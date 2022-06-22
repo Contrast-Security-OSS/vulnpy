@@ -18,14 +18,12 @@ def client():
     return testing.TestClient(app)
 
 
-@pytest.mark.asyncio
 @parametrize_root
 def test_root_views(client, view_path):
     response = client.simulate_get(view_path)
     assert response.status_code == 200
 
 
-@pytest.mark.asyncio
 @parametrize_triggers
 @pytest.mark.parametrize("request_method", ["simulate_get"])
 def test_trigger(client, request_method, view_name, trigger_name):
@@ -43,7 +41,6 @@ def test_trigger(client, request_method, view_name, trigger_name):
         assert "<p>XSS: {}</p>".format(DATA.get(view_name)) in str(response.content)
 
 
-@pytest.mark.asyncio
 @mock.patch(
     "vulnpy.trigger.cmdi.do_os_system", side_effect=Exception("something bad happened")
 )
