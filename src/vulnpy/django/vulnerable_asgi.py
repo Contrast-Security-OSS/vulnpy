@@ -1,6 +1,7 @@
 from django.http import HttpResponse
-import django
-import urllib.parse
+
+# import django
+# import urllib.parse
 
 try:
     from django.conf.urls import url as compat_url
@@ -15,9 +16,9 @@ async def _get_user_input(request):
     # Django 3.* doesn't have a body for GET requests
     # and adds the body to the header instead
     # so we need to check the version and decode the url
-    if request.method == "GET" and django.VERSION[0] < 4:
-        header_user_input = request.META.get("HTTP_QUERY_STRING")
-        return urllib.parse.unquote(header_user_input.split("=", 1)[1])
+    # if request.method == "GET" and django.VERSION[0] < 4:
+    #     header_user_input = request.META.get("HTTP_QUERY_STRING")
+    #     return urllib.parse.unquote(header_user_input.split("=", 1)[1])
 
     if request.method == "GET":
         return request.GET.get("user_input", "")
