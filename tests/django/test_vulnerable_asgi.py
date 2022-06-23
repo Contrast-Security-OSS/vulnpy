@@ -12,7 +12,9 @@ def client():
         settings.ROOT_URLCONF = "vulnpy.django.vulnerable_asgi"
     else:
         settings.configure(
-            ROOT_URLCONF="vulnpy.django.vulnerable_asgi", ALLOWED_HOSTS=["testserver"]
+            ROOT_URLCONF="vulnpy.django.vulnerable_asgi",
+            ALLOWED_HOSTS=["testserver"],
+            DJANGO_ALLOW_ASYNC_UNSAFE="false",
         )
     return AsyncClient()
 
@@ -28,8 +30,9 @@ async def test_root_views(client, view_path):
 async def test_trigger(client, request_method, view_name, trigger_name):
     get_or_post = getattr(client, request_method)
     response = await get_or_post(
-        "/vulnpy/{}/{}".format(view_name, trigger_name),
-        {"user_input": DATA[view_name]},
+        path="/vulnpy/{}/{}".format(view_name, trigger_name),
+        data={"user_input": DATA[view_name]},
+        secure=True,
     )
     assert response.status_code == 200
     if view_name == "xss":
