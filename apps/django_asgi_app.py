@@ -1,4 +1,5 @@
 import sys
+import os
 
 from django.conf import settings
 from django.core import management
@@ -27,11 +28,10 @@ if not settings.configured:
 
 vulnpy_app = get_asgi_application()
 
-# todo: add contrast later on
-# if os.environ.get("VULNPY_USE_CONTRAST"):
-#     from contrast.django import ContrastMiddleware
-#
-#     vulnpy_app = ContrastMiddleware(vulnpy_app)
+if os.environ.get("VULNPY_USE_CONTRAST"):
+    from contrast.django_asgi import ContrastMiddleware
+
+    vulnpy_app = ContrastMiddleware(vulnpy_app)
 
 if __name__ == "__main__":
     management.execute_from_command_line(sys.argv)
