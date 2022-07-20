@@ -33,6 +33,7 @@ def vulnerable_app(environ, start_response):
     headers.append(("Cache-Control", "public"))
     # This makes the app vulnerable to X-XSS-Protection disabled
     headers.append(("X-XSS-Protection", "0"))
+    headers.append(("Strict-Transport-Security", "max-age=0"))
 
     start_response("200 OK", headers)
 
