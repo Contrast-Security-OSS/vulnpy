@@ -12,7 +12,7 @@ trigger_extras = {"PyYAML<7", "lxml>=4.3.1", "mock==3.*"}
 aiohttp_extras = {"aiohttp<4"} | trigger_extras
 django_extras = {"Django<5"} | trigger_extras
 falcon_extras = {"falcon<4", "falcon-multipart==0.2.0"} | trigger_extras
-flask_extras = {"Flask<3"} | trigger_extras
+flask_extras = {"Flask<3", "Werkzeug<2.2"} | trigger_extras
 fastapi_extras = {
     "fastapi<0.80",
     "uvicorn[standard]<1.0",
@@ -35,7 +35,7 @@ pyramid_extras = {
 
 wsgi_extras = trigger_extras
 bottle_extras = {"bottle<1"} | trigger_extras
-quart_extras = {"quart<0.18"} | trigger_extras
+quart_extras = {"quart<0.18", "Werkzeug<2.2"} | trigger_extras
 
 dev_extras = {"WebTest==2.0.*", "tox==3.*"}
 
