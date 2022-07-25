@@ -14,7 +14,7 @@ django_extras = {"Django<5"} | trigger_extras
 falcon_extras = {"falcon<4", "falcon-multipart==0.2.0"} | trigger_extras
 flask_extras = {"Flask<3"} | trigger_extras
 fastapi_extras = {
-    "fastapi<0.79",
+    "fastapi<0.80",
     "uvicorn[standard]<1.0",
     "python-multipart<1",
 } | trigger_extras
