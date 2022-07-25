@@ -2,3 +2,4 @@ pytest-asyncio; python_version >='3.7'
 pytest-cov
 tox
 requests
+Werkzeug==2.1.*
