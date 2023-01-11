@@ -1,6 +1,6 @@
 HOST ?= localhost
 PORT ?= 8000
-UWSGI_OPTIONS := --enable-threads --single-interpreter --master --lazy-apps --http $(HOST):$(PORT)
+UWSGI_OPTIONS := --enable-threads --single-interpreter --master --lazy-apps --http $(HOST):$(PORT) --honour-stdin
 GUNICORN_OPTIONS := --timeout=0 --preload -b $(HOST):$(PORT)
 
 export VULNPY_REAL_SSRF_REQUESTS = true
