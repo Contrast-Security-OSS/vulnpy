@@ -35,7 +35,7 @@ pyramid_extras = {
 
 wsgi_extras = trigger_extras
 bottle_extras = {"bottle<1"} | trigger_extras
-quart_extras = {"quart<0.18"} | trigger_extras
+quart_extras = {"quart<1"} | trigger_extras
 
 dev_extras = {"WebTest==2.0.*", "tox==3.*"}
 
