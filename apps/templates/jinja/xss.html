@@ -1,0 +1,34 @@
+{% block content %}
+<h1>XSS</h1>
+<div class="column is-8">
+    <p>Any input entered will be displayed on this page</p>
+    <p>Example:
+        <xmp><img src="nonexistent-file.png" onerror=alert(document.cookie);></xmp>
+    </p>
+
+    <br>
+    <form action="{{ path }}" method="get">
+        <div class="field has-addons">
+            <div class="control">
+                <input class="input" type="text" name="user_input" placeholder="user_input">
+            </div>
+            <div class="control">
+                <button class="button is-info" action="submit">
+                    Submit
+                </button>
+            </div>
+        </div>
+    </form>
+
+    {% if error %}
+
+    Error: {{ error }}
+
+    {% endif %}
+
+    <div>
+        {{ user_input | safe }}
+    </div>
+
+</div>
+{% endblock %}
