@@ -63,3 +63,5 @@ def generate_trigger_urls(app):
 def add_vulnerable_routes(app):
     generate_root_urls(app)
     generate_trigger_urls(app)
+
+#test
