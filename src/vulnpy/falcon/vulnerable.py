@@ -62,7 +62,6 @@ def find_base_class(name):
 
 
 def get_trigger_view(name, trigger):
-
     baseclass = find_base_class(name)
 
     class _View(baseclass):
