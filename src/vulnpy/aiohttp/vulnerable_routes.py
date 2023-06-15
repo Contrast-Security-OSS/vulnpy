@@ -69,6 +69,7 @@ def generate_trigger_urls():
 
             setattr(view_func, "__name__", view_name)
             trigger_urls.append(web.get(view_name, view_func))
+            trigger_urls.append(web.get(view_name + "/", view_func))
 
     return trigger_urls
 

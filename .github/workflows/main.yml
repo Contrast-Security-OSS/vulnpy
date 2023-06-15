@@ -8,23 +8,23 @@ concurrency:
 
 jobs:
   black:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-python@v2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
         with:
-          python-version: 3.7
+          python-version: '3.11'
       - run: pip install tox
       - name: Run black
         run: tox -e black
 
   flake8:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-python@v2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
         with:
-          python-version: 3.7
+          python-version: '3.11'
       - run: pip install tox
       - name: Run flake8
         run: tox -e flake8
@@ -33,20 +33,20 @@ jobs:
     needs:
       - black
       - flake8
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [3.7, 3.8, 3.9]
+        python-version: ['3.7', '3.8', '3.9', '3.10', '3.11']
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
       - name: Install dependencies
         run: |
-          sudo apt-get update && sudo apt-get install libxml2-dev libxslt-dev python-dev
+          sudo apt-get update && sudo apt-get install libxml2-dev libxslt-dev
           python -m pip install --upgrade pip
           pip install tox
       - name: Run unit tests
@@ -54,24 +54,24 @@ jobs:
           TOX_COV_SUFFIX: py${{ matrix.python-version }}
         run: tox -e pytest
       - name: Upload coverage
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           path: .coverage.py${{ matrix.python-version }}
 
   coverage:
     needs: test
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-python@v2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
         with:
-          python-version: 3.7
+          python-version: '3.7'
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install coverage
       - name: Download coverage results
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
       - name: Compute coverage
         run: |
           coverage combine artifact/
