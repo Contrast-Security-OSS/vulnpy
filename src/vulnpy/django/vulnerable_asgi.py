@@ -20,8 +20,10 @@ async def _get_user_input(request):
         and django.VERSION[0] < 4
         and not request.GET.get("user_input")
     ):
-        header_user_input = request.META.get("HTTP_QUERY_STRING")
-        return urllib.parse.unquote(header_user_input.split("=", 1)[1])
+        header_user_input = request.META.get("HTTP_QUERY_STRING")  # pragma: no cover
+        return urllib.parse.unquote(
+            header_user_input.split("=", 1)[1]
+        )  # pragma: no cover
 
     if request.method == "GET":
         return request.GET.get("user_input", "")
