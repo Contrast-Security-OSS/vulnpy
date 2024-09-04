@@ -53,10 +53,12 @@ jobs:
         env:
           TOX_COV_SUFFIX: py${{ matrix.python-version }}
         run: tox -e pytest
+      - run: ls -R
       - name: Upload coverage
         uses: actions/upload-artifact@v4
         with:
           path: .coverage.py${{ matrix.python-version }}
+          if-no-files-found: error
 
   coverage:
     needs: test
