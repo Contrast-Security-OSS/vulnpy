@@ -54,9 +54,12 @@ jobs:
           TOX_COV_SUFFIX: py${{ matrix.python-version }}
         run: tox -e pytest
       - name: Upload coverage
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
+          name: .coverage.py${{ matrix.python-version }}
           path: .coverage.py${{ matrix.python-version }}
+          include-hidden-files: true
+          if-no-files-found: error
 
   coverage:
     needs: test
@@ -71,8 +74,8 @@ jobs:
           python -m pip install --upgrade pip
           pip install coverage
       - name: Download coverage results
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4.1.7
       - name: Compute coverage
         run: |
-          coverage combine artifact/
+          coverage combine .coverage.py*
           coverage report -i -m --fail-under=100
