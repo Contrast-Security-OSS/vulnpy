@@ -4,7 +4,7 @@ from bottle import Bottle, run, redirect
 from vulnpy.bottle import add_vulnerable_routes
 
 
-app = Bottle(__name__)
+app = Bottle()
 add_vulnerable_routes(app)
 
 
