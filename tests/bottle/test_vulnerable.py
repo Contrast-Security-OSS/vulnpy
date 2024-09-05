@@ -8,7 +8,7 @@ from webtest import TestApp
 
 @pytest.fixture(scope="module")
 def client():
-    app = Bottle(__name__)
+    app = Bottle()
     add_vulnerable_routes(app)
     return TestApp(app)
 
