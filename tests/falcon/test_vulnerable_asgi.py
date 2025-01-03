@@ -12,7 +12,7 @@ from tests import parametrize_root, parametrize_triggers
 
 
 @pytest.fixture(scope="module")
-def client():
+async def client():
     app = falcon.asgi.App()
     vulnpy.falcon.add_vulnerable_asgi_routes(app)
     return testing.TestClient(app)

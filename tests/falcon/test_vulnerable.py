@@ -13,7 +13,7 @@ from tests import parametrize_root, parametrize_triggers
 
 @pytest.fixture(scope="module")
 def client():
-    app = falcon.API()
+    app = falcon.App()
     vulnpy.falcon.add_vulnerable_routes(app)
     return testing.TestClient(app)
 
