@@ -9,7 +9,7 @@ except IOError:
     README = ""
 
 trigger_extras = {"PyYAML<7", "lxml>=4.3.1", "mock==3.*"}
-aiohttp_extras = {"aiohttp<4"} | trigger_extras
+aiohttp_extras = {"aiohttp<3.11"} | trigger_extras
 django_extras = {"Django<6"} | trigger_extras
 falcon_extras = {"falcon<5", "falcon-multipart==0.2.0"} | trigger_extras
 flask_extras = {"Flask<4"} | trigger_extras
