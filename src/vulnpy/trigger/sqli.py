@@ -33,8 +33,7 @@ EXECUTE_QUERY_FMT = "INSERT INTO Character VALUES ('{}', '1')"
 
 def do_sqlite3_execute(user_input):
     def execute(cursor):
-        sql = EXECUTE_QUERY_FMT.format(user_input)
-        cursor.execute(sql)
+        cursor.execute(EXECUTE_QUERY_FMT.format(user_input))
 
     return _execute(execute)
 
