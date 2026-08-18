@@ -1,3 +1,6 @@
+> [!WARNING]
+> As of August 2026, this project is no longer maintained.
+
 # VulnPy
 
 A library of purposely-vulnerable Python functions. These serve as a foundation for creating
